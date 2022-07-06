@@ -10,6 +10,14 @@ class Root(object):
     def index(self):
         return open(INDEX_PAGE).read()
 
+    @cherrypy.expose
+    def signin(self):
+        return open(SIGNIN_PAGE).read()
+
+    @cherrypy.expose
+    def signup(self):
+        return open(SIGNUP_PAGE).read()
+
 
 if __name__ == '__main__':
     cherrypy.config.update({'server.socket_port': 10005})

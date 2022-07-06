@@ -3,6 +3,8 @@ import os
 SERVER  = os.path.abspath(os.path.dirname(__file__))
 
 INDEX_PAGE = os.path.normpath(os.path.join(SERVER, '../client/index.html'))
+SIGNIN_PAGE = os.path.normpath(os.path.join(SERVER, '../client/signin.html'))
+SIGNUP_PAGE = os.path.normpath(os.path.join(SERVER, '../client/signup.html'))
 
 SERVER_CONFIG = {
     '/': {
