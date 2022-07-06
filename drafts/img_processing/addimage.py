@@ -4,6 +4,8 @@ from Crypto.Cipher import AES
 from Crypto.Hash import SHA256
 import os
 import io
+from Crypto.Util.Padding import pad, unpad
+
 
 #Transform image to bytes
 def TransformToBytes(data):
@@ -13,12 +15,26 @@ def TransformToBytes(data):
 
 
 #cipher image represented in bytes
-def cipherimage(data):
+def encryptImage(data):
+    block_size = 16
     key= b'NarcisosNarcisos'
     cipher= AES.new(key, AES.MODE_ECB)
-    dataencrypted= cipher.encrypt(data)
-    
+    dataencrypted= cipher.encrypt(pad(data, block_size))
     return dataencrypted
+
+def decryptImage(datatodecrypt):
+    block_size = 16
+    key= b'NarcisosNarcisos'
+    cipher= AES.new(key, AES.MODE_ECB)
+    datadecrypted= cipher.decrypt(datatodecrypt)
+    datadecrypted= unpad(datadecrypted, block_size)
+    print (datadecrypted)
+    return datadecrypted
+    
+    
+    # image = Image.open(io.BytesIO(datadecrypted))
+    # image.show()
+    # image.save("decrypted.png")
 
 def hashimage(img):
     hash = SHA256.new()
@@ -32,13 +48,13 @@ def hashimage(img):
     
 
    
-img = Image.open('watermark.jpg').convert('RGBA')
+img = Image.open('watermark.png').convert('RGBA')#watermark
 img.putalpha(130) 
 img.save('logoxImagens.png')
 
-input_image_path = 'sapce.jpg'
-watermark_image_path = 'logoxImagens.png'
-output_image_path = 'gato_watermarked.png'
+input_image_path = 'skeleton.jpg'#image to apply watermark
+watermark_image_path = 'watermark.png'#watermark in png
+output_image_path = 'img_watermarked.png'#image watermarked
 
 def watermark(input_image_path, output_image_path, watermark_image_path):
     base_image = Image.open(input_image_path).convert('RGBA')
@@ -58,8 +74,7 @@ def watermark(input_image_path, output_image_path, watermark_image_path):
 def main():
     img = input_image_path
     
-    # watermark(img, output_image_path, watermark_image_path)
-    # main(input_image_path)
+    watermark(img, output_image_path, watermark_image_path)
     
     
     img = Image.open(input_image_path)
@@ -69,6 +84,12 @@ def main():
     print("Formato: %s" % img.format)
     
     imgbytes = TransformToBytes(input_image_path)  
-    cipherimage(imgbytes)
-    print(hashimage(imgbytes))
+    imageEncrypted= encryptImage(imgbytes)
+    imageDecrypted=decryptImage(imageEncrypted)
+    hash_id= hashimage(imgbytes)
+    print(imageEncrypted)
+    print("\n")
+    print("\n")
+    print(imageDecrypted)
+    print(hash_id)
 main()
