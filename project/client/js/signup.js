@@ -13,7 +13,7 @@ async function doRegister(e) {
     };
     const response = await (await fetch('/api/users/create', options)).json();
     if (response.creation == 'OK') {
-        alert('Registration successful' + response.password);
+        document.getElementById("password").value = response.password;
     } else  {
         alert('Registration failed');
     }

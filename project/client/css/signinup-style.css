@@ -13,6 +13,10 @@ header {
     align-items: center;
     justify-content: center;
 }
+
+.account-form input {
+    max-width: 300px;
+}
   
 .paragraph-light {
     font-weight: 500;
