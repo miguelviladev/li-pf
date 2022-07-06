@@ -9,12 +9,12 @@ async function doRegister(e) {
     const options = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({"username": username, "password": password})
+        body: JSON.stringify({"username": username})
     };
-    const response = await (await fetch('/api/users/auth', options)).json();
-    if (response.authentication == 'OK') {
-        alert('Login successful');
+    const response = await (await fetch('/api/users/create', options)).json();
+    if (response.creation == 'OK') {
+        alert('Registration successful' + response.password);
     } else  {
-        alert('Login failed');
+        alert('Registration failed');
     }
 };

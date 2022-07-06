@@ -1,5 +1,7 @@
 import cherrypy
 import secrets
+import string
+import random
 import time
 from config import *
 from sqlcon import *
@@ -39,7 +41,8 @@ class Users():
     @cherrypy.tools.json_out()
     def auth(self):
         body = cherrypy.request.json
-        user = selector("SELECT * FROM users WHERE username = '{}' AND password = '{}'".format(body["username"], body["password"]))
+        #user = selector("SELECT * FROM users WHERE username = '{}' AND password = '{}'".format(body["username"], body["password"]))
+        user = selector("SELECT * FROM users WHERE username = ? AND password = ?", (body["username"], body["password"]))
         if len(user) == 1:
             token = secrets.token_hex(4)
             expire = int(time.time()) + 7200
@@ -49,10 +52,22 @@ class Users():
                 splited_tokens.append(f"{secrets.token_hex(16)},{expire}")
             else:
                 splited_tokens.append(f"{secrets.token_hex(16)},{expire}")
-            executor("UPDATE users SET access_tokens = '{}' WHERE username = '{}'".format("#".join(splited_tokens), body["username"]))
+            executor("UPDATE users SET access_tokens = ? WHERE username = ?",("#".join(splited_tokens), body["username"]))
             return {"authentication": "OK","token": "{}".format(token)}
         else:
             return {"authentication": "ERROR","token": ""}
+
+    @cherrypy.expose
+    @cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
+    def create(self):
+        body = cherrypy.request.json
+        if body["username"].rstrip() == "" or selector("SELECT * FROM users WHERE username = ?", (body["username"],)):
+            return {"creation": "ERROR","password": ""}
+        else:
+            password = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(8))
+            executor("INSERT INTO users (username, password, ownerships, access_tokens) VALUES (?, ?, '', '')",(body["username"], password))
+            return {"creation": "OK", "password": "{}".format(password)}
 
 if __name__ == '__main__':
     cherrypy.config.update({'server.socket_port': 10005})

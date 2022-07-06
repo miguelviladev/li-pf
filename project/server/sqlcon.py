@@ -27,17 +27,17 @@ def initializeDatabase():
     except sqlite3.Error as error:
         raise Exception("Error connecting to the database: ", error)
 
-def selector(query):
+def selector(query, tupledata=None):
     connection = sqlite3.connect(STORAGE_DB)
     cursor = connection.cursor()
-    cursor.execute(query)
+    cursor.execute(query, tupledata)
     data =  cursor.fetchall()
     connection.close()
     return data
 
-def executor(query):
+def executor(query, tupledata=None):
     connection = sqlite3.connect(STORAGE_DB)
     cursor = connection.cursor()
-    cursor.execute(query)
+    cursor.execute(query, tupledata)
     connection.commit()
     connection.close()
