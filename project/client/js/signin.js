@@ -13,8 +13,13 @@ async function doLogin(e) {
     };
     const response = await (await fetch('/api/users/auth', options)).json();
     if (response.authentication == 'OK') {
-        alert('Login successful');
+        writeToken(response.token);
     } else  {
         alert('Login failed');
     }
 };
+
+function writeToken(token) {
+    localStorage.setItem('token', token);
+    window.location.href = '/';
+}

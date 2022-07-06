@@ -41,21 +41,26 @@ class Users():
     @cherrypy.tools.json_out()
     def auth(self):
         body = cherrypy.request.json
-        #user = selector("SELECT * FROM users WHERE username = '{}' AND password = '{}'".format(body["username"], body["password"]))
         user = selector("SELECT * FROM users WHERE username = ? AND password = ?", (body["username"], body["password"]))
         if len(user) == 1:
             token = secrets.token_hex(4)
             expire = int(time.time()) + 7200
-            splited_tokens = user[0][3].split("#")
-            if len(splited_tokens)> 9:
-                del splited_tokens[0]
-                splited_tokens.append(f"{secrets.token_hex(16)},{expire}")
-            else:
-                splited_tokens.append(f"{secrets.token_hex(16)},{expire}")
-            executor("UPDATE users SET access_tokens = ? WHERE username = ?",("#".join(splited_tokens), body["username"]))
+            executor("UPDATE users SET access_token = ? WHERE username = ?",(token, body["username"]))
+            executor("UPDATE users SET expiration = ? WHERE username = ?",(expire, body["username"]))
             return {"authentication": "OK","token": "{}".format(token)}
         else:
             return {"authentication": "ERROR","token": ""}
+
+    @cherrypy.expose
+    @cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
+    def valid(self):
+        body = cherrypy.request.json
+        expiration = selector("SELECT expiration FROM users WHERE access_token = ?", (body["token"],))
+        if body["token"] == None or expiration[0][0] < int(time.time()):
+            return {"authentication": "ERROR"}
+        else:
+            return {"authentication": "OK"}
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
@@ -70,7 +75,7 @@ class Users():
             return {"creation": "ERROR","password": ""}
         else:
             password = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(8))
-            executor("INSERT INTO users (username, password, ownerships, access_tokens) VALUES (?, ?, '', '')",(body["username"], password))
+            executor("INSERT INTO users (username, password, ownerships, access_token, expiration) VALUES (?, ?, '', '', 0)",(body["username"], password))
             return {"creation": "OK", "password": "{}".format(password)}
 
 if __name__ == '__main__':

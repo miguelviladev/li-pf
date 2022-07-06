@@ -12,7 +12,8 @@ def initializeDatabase():
                     username TEXT PRIMARY KEY,
                     password TEXT,
                     ownerships TEXT,
-                    access_tokens TEXT)""")
+                    access_token TEXT,
+                    expiration INTEGER)""")
             cursor.execute("""CREATE TABLE images (
                     identifier TEXT PRIMARY KEY,
                     nomen TEXT,
