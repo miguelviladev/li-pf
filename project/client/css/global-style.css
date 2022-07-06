@@ -10,7 +10,8 @@ body {
   font-family: "Montserrat", sans-serif;
   user-select: none;
   color: #ffffff;
-  background-color: #1d1d1d;
+  background: linear-gradient(90deg, #1d1d1d 25px, transparent 1%) center, linear-gradient(#1d1d1d 25px, transparent 1%) center, #5c5c5c;
+  background-size: 26px 26px;
 }
 
 .section-space {
