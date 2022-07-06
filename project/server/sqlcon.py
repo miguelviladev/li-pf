@@ -1,31 +1,43 @@
+import os
 import sqlite3
 from config import *
 
-def connection():
+def initializeDatabase():
     try:
-        return sqlite3.connect(STORAGE_DB)
+        if not(os.path.exists(STORAGE_DB)):
+            connection = sqlite3.connect(STORAGE_DB)
+            cursor = connection.cursor()
+            cursor.execute("""
+                CREATE TABLE users (
+                    username TEXT PRIMARY KEY,
+                    password TEXT,
+                    ownerships TEXT,
+                    access_tokens TEXT)""")
+            cursor.execute("""CREATE TABLE images (
+                    identifier TEXT PRIMARY KEY,
+                    nomen TEXT,
+                    original_path TEXT,
+                    protected_path TEXT,
+                    owner TEXT,
+                    collection TEXT,
+                    history TEXT)
+            """)
+            connection.commit()
+            connection.close()
     except sqlite3.Error as error:
         raise Exception("Error connecting to the database: ", error)
 
-def select(query):
-    try:
-        connection = connection()
-        cursor = connection.cursor()
-        cursor.execute(query)
-        data =  cur.fetchall()
-    except sqlite3.Error as error:
-        raise Exception("Error executing query: ", error)
-    finally:
-        if connection: connection.close()
+def selector(query):
+    connection = sqlite3.connect(STORAGE_DB)
+    cursor = connection.cursor()
+    cursor.execute(query)
+    data =  cursor.fetchall()
+    connection.close()
     return data
 
-def execute(query):
-    try:
-        connection = connection()
-        cursor = connection.cursor()
-        cursor.execute(query)
-        connection.commit()
-    except sqlite3.Error as error:
-        raise Exception("Error executing querry: ", error)
-    finally:
-        if connection: connection.close()
+def executor(query):
+    connection = sqlite3.connect(STORAGE_DB)
+    cursor = connection.cursor()
+    cursor.execute(query)
+    connection.commit()
+    connection.close()

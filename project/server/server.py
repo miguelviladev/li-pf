@@ -1,5 +1,8 @@
 import cherrypy
+import secrets
+import time
 from config import *
+from sqlcon import *
 import os
 
 class Root(object):
@@ -36,12 +39,22 @@ class Users():
     @cherrypy.tools.json_out()
     def auth(self):
         body = cherrypy.request.json
-        if body["username"] == "admin" and body["password"] == "admin":
-            return {"authentication": "OK","token": "jaodh2323jd23jajkd7191ja91jlK"}
+        user = selector("SELECT * FROM users WHERE username = '{}' AND password = '{}'".format(body["username"], body["password"]))
+        if len(user) == 1:
+            token = secrets.token_hex(4)
+            expire = int(time.time()) + 7200
+            splited_tokens = user[0][3].split("#")
+            if len(splited_tokens)> 9:
+                del splited_tokens[0]
+                splited_tokens.append(f"{secrets.token_hex(16)},{expire}")
+            else:
+                splited_tokens.append(f"{secrets.token_hex(16)},{expire}")
+            executor("UPDATE users SET access_tokens = '{}' WHERE username = '{}'".format("#".join(splited_tokens), body["username"]))
+            return {"authentication": "OK","token": "{}".format(token)}
         else:
             return {"authentication": "ERROR","token": ""}
 
 if __name__ == '__main__':
     cherrypy.config.update({'server.socket_port': 10005})
-    print(SERVER_CONFIG)
+    initializeDatabase()
     cherrypy.quickstart(Root(), '/', SERVER_CONFIG)
