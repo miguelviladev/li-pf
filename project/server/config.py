@@ -1,6 +1,8 @@
 import os
 
 SERVER  = os.path.abspath(os.path.dirname(__file__))
+STORAGE = os.path.normpath(os.path.join(SERVER, '../storage'))
+STORAGE_DB = os.path.normpath(os.path.join(STORAGE, '../storage/database.db'))
 
 INDEX_PAGE = os.path.normpath(os.path.join(SERVER, '../client/index.html'))
 SIGNIN_PAGE = os.path.normpath(os.path.join(SERVER, '../client/signin.html'))
