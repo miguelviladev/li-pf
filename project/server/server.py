@@ -62,7 +62,11 @@ class Users():
     @cherrypy.tools.json_out()
     def create(self):
         body = cherrypy.request.json
-        if body["username"].rstrip() == "" or selector("SELECT * FROM users WHERE username = ?", (body["username"],)):
+        invalid = False
+        for c in body["username"]:
+            if c not in string.ascii_letters + string.digits:
+                invalid = True
+        if body["username"].rstrip() == "" or selector("SELECT * FROM users WHERE username = ?", (body["username"],)) or invalid:
             return {"creation": "ERROR","password": ""}
         else:
             password = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(8))
