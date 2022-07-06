@@ -20,8 +20,16 @@ body {
 
 a {
   font-weight: 700;
-  transition: all 0.4s ease;
+  transition: all 0.2s ease;
   text-decoration: none;
+}
+
+a:hover {
+  color: #d32f2f;
+}
+
+a:active {
+  color: #d32f2f;
 }
 
 .title1-dark {

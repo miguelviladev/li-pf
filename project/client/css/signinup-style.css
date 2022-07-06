@@ -1,0 +1,33 @@
+header {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.account-form {
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+  
+.paragraph-light {
+    font-weight: 500;
+    margin: auto;
+    text-align: center;
+}
+
+.paragraph-link {
+    color: #fff;
+}
+  
+.title1-light {
+    margin-bottom: 2rem;
+}
+  
+.btn {
+    width: 200px;
+}
