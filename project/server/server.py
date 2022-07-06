@@ -4,7 +4,7 @@ import os
 
 class Root(object):
     def __init__(self):
-        pass
+        self.api = Api()
 
     @cherrypy.expose
     def index(self):
@@ -18,9 +18,12 @@ class Root(object):
     def signup(self):
         return open(SIGNUP_PAGE).read()
 
+class Api(object):
+    @cherrypy.expose
+    def index(self):
+        raise cherrypy.HTTPRedirect("/")
 
 if __name__ == '__main__':
     cherrypy.config.update({'server.socket_port': 10005})
     print(SERVER_CONFIG)
     cherrypy.quickstart(Root(), '/', SERVER_CONFIG)
-    
