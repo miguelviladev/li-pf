@@ -13,6 +13,7 @@ class Root(object):
 
     @cherrypy.expose
     def index(self):
+        return "<script>alert('a')</script>"
         return open(INDEX_PAGE).read()
 
     @cherrypy.expose
@@ -57,7 +58,7 @@ class Users():
     def valid(self):
         body = cherrypy.request.json
         expiration = selector("SELECT expiration FROM users WHERE access_token = ?", (body["token"],))
-        if body["token"] == None or expiration[0][0] < int(time.time()):
+        if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
             return {"authentication": "ERROR"}
         else:
             return {"authentication": "OK"}
