@@ -13,7 +13,6 @@ class Root(object):
 
     @cherrypy.expose
     def index(self):
-        return "<script>alert('a')</script>"
         return open(INDEX_PAGE).read()
 
     @cherrypy.expose
