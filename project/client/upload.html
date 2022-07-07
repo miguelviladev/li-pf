@@ -1,73 +1,104 @@
 <!DOCTYPE html>
 <html lang="pt-PT">
-  <head>
-    <!-- Meta Tags Necessárias -->
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <!-- CSS do Bootstrap -->
-    <link rel="stylesheet" href="./css/bootstrap.min.css" />
-    <!-- CSS do FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- CSS Personalizado -->
-    <link rel="stylesheet" href="./css/global-style.css" />
-    <link rel="stylesheet" href="./css/navbar-style.css" />
-    <link rel="stylesheet" href="./css/upload-style.css" />
-    <!-- JS Personalizado -->
-    <script src="./js/navbar.js"></script>
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="./img/favicon.png">
-    <title>Upload</title>
-  </head>
-  <body data-bs-spy="scroll" data-bs-offset="200" data-bs-target=".navbar">
-    <!-- Barra de Navegação -->
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-      <div class="container nav-cont">
-        <a class="navbar-brand" href="/" onclick="esconder(false)"><img src="./img/logo.png" alt=""></a>
-        <button id="toggler" class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
-          data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-          aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="gallery.html" onclick="esconder()">Galeria</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="perfil.html" onclick="esconder()">Perfil</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" onclick="esconder()">Logout</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <header>
-        <div class="row justify-content-center ">
-            <div class="title1-light" >
-              <h1>Upload an Image</h1>
+    <head>
+        <!-- Meta Tags Necessárias -->
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <!-- CSS do Bootstrap -->
+        <link rel="stylesheet" href="./css/bootstrap.min.css" />
+        <!-- CSS do FontAwesome -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+        <!-- CSS Personalizado -->
+        <link rel="stylesheet" href="./css/global-style.css" />
+        <link rel="stylesheet" href="./css/navbar-style.css" />
+        <link rel="stylesheet" href="./css/upload-style.css" />
+        <!-- JS Personalizado -->
+        <script src="./js/navbar.js"></script>
+        <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="./img/favicon.png" />
+        <title>Upload</title>
+    </head>
+    <body data-bs-spy="scroll" data-bs-offset="200" data-bs-target=".navbar">
+        <!-- Barra de Navegação -->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+            <div class="container nav-cont">
+                <a class="navbar-brand" href="/" onclick="esconder(false)"><img src="./img/logo.png" alt="" /></a>
+                <button
+                    id="toggler"
+                    class="navbar-toggler collapsed"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/collections" onclick="esconder()">Galeria</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/profile" onclick="esconder()">Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" onclick="esconder()">Logout</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </header>
-
-    <section class="section-space text-center">
-        <div class="row justify-content-center">
-            <h2>Upload an image to the galery:</h2>
-            <button id="select-button" type="button" class="btn btn-primary"> Select from files</button>
-        </div>    
-    </section>
-
-    
-
-    <footer class="footer-light section-space">
-        <div class="container text-center">
-            <div class="footer-text">
-                <p> Copyright © 2020 - All rights reserved.</p>
+        </nav>
+        <header>
+            <div class="row justify-content-center">
+                <div class="title1-light">
+                    <h1>Upload an Image</h1>
+                </div>
             </div>
-        </div>
+        </header>
 
-    </footer>
-    <script src="./js/bootstrap.bundle.min.js"></script>
-</body>
+        <section class="section-space text-center">
+            <div class="container">
+                <div class="border-0 col-md-8 m-auto pt-5">
+                    <div class="row py-4">
+                        <div class="col-lg-6 mx-auto">
+                            <!-- Uploaded image area-->
+
+                            <p class="font-italic text-white text-center">The image uploaded will be rendered inside the box below.</p>
+
+                            <div class="image-area mt-4"><img id="imageResult" src="#" alt="" class="img-fluid rounded shadow-sm mx-auto d-block" /></div>
+
+                            <!-- Upload image input-->
+                            <form id="addForm" method="POST" enctype="multipart/form-data" action="addImage">
+                                <div class="input-group mb-3 px-2 py-2 rounded-pill bg-white shadow-sm">
+                                    <input id="upload" type="file" onchange="readURL(this);" class="form-control border-0" id="imgInput" name="imgForm" />
+
+                                    <label id="upload-label" for="upload" class="font-weight-light text-muted">Choose file</label>
+
+                                    <div class="input-group-append">
+                                        <label for="upload" class="btn btn-light m-0 rounded-pill px-4">
+                                            <i class="fa fa-cloud-upload mr-2 text-muted"></i
+                                            ><small class="text-uppercase font-weight-bold text-muted">Choose file</small></label
+                                        >
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer-light section-space">
+            <div class="container text-center">
+                <div class="footer-text">
+                    <p>Copyright © 2020 - All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+        <script src="./js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="./js/upload.js"></script>
+    </body>
 </html>

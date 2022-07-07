@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         a_button_action.setAttribute('href', '/signin');
         button_action.innerHTML = 'Autenticação <i class="fa-solid fa-key"></i>';
     } else  {
-        a_button_action.setAttribute('href', '/gallery');
+        a_button_action.setAttribute('href', '/collections');
         button_action.innerHTML = 'Ver Galeria <i class="fa-solid fa-images"></i>';
     };
  }, false);

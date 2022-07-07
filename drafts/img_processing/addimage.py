@@ -58,7 +58,7 @@ img = Image.open('watermark.png').convert('RGBA')  # watermark
 img.putalpha(130)
 img.save('logoxImagens.png')
 
-input_image_path = 'skeleton.jpg'  # image to apply watermark
+input_image_path = 'sapce.jpg'  # image to apply watermark
 watermark_image_path = 'watermark.png'  # watermark in png
 output_image_path = 'img_watermarked.png'  # image watermarked
 
@@ -120,7 +120,8 @@ def main():
     print("Largura: %dpx" % width)
     print("Altura: %dpx" % height)
     print("Formato: %s" % img.format)
-
+    
+    
     imgbytes = TransformToBytes(input_image_path)
     imageEncrypted = encryptImage(imgbytes)
     imageDecrypted = decryptImage(imageEncrypted)
@@ -130,7 +131,7 @@ def main():
     # print("\n")
     # print(imageDecrypted)
     print(hash_id)
-    TransformToImage(imageDecrypted)
+    #TransformToImage(imageDecrypted)
 
 
 main()

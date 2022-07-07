@@ -9,6 +9,9 @@ SIGNIN_PAGE_BODY = os.path.normpath(os.path.join(SERVER, '../client/body-signin.
 SIGNUP_PAGE_BODY = os.path.normpath(os.path.join(SERVER, '../client/body-signup.html'))
 COLLECTIONS_PAGE= os.path.normpath(os.path.join(SERVER, '../client/collections.html'))
 ABOUT_PAGE= os.path.normpath(os.path.join(SERVER, '../client/about.html'))
+PROFILE_PAGE= os.path.normpath(os.path.join(SERVER, '../client/profile.html'))
+UPLOAD_PAGE= os.path.normpath(os.path.join(SERVER, '../client/upload.html'))
+
 
 SERVER_CONFIG = {
     '/': {

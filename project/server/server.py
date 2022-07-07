@@ -23,6 +23,14 @@ class Root(object):
     @cherrypy.expose
     def about(self):
         return open(ABOUT_PAGE).read()
+      
+    @cherrypy.expose
+    def profile(self):
+        return open(PROFILE_PAGE).read()
+      
+    @cherrypy.expose
+    def upload(self):
+        return open(UPLOAD_PAGE).read()
 
     @cherrypy.expose
     def signin(self):
