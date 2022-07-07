@@ -1,3 +1,4 @@
+from matplotlib import collections
 import cherrypy
 import secrets
 import string
@@ -14,6 +15,14 @@ class Root(object):
     @cherrypy.expose
     def index(self):
         return open(LANDING_PAGE).read()
+      
+    @cherrypy.expose
+    def collections(self):
+        return open(COLLECTIONS_PAGE).read()
+      
+    @cherrypy.expose
+    def about(self):
+        return open(ABOUT_PAGE).read()
 
     @cherrypy.expose
     def signin(self):
