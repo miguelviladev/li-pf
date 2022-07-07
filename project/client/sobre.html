@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+  <head>
+    <!-- Meta Tags Necessárias -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- CSS do Bootstrap -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <!-- CSS do FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- CSS Personalizado -->
+    <link rel="stylesheet" href="./css/global-style.css" />
+    <link rel="stylesheet" href="./css/navbar-style.css" />
+    <link rel="stylesheet" href="./css/sobre-style.css" />
+    <!-- JS Personalizado -->
+    <script src="./js/navbar.js"></script>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="./img/favicon.png">
+    <title>Sobre</title>
+  </head>
+  <body data-bs-spy="scroll" data-bs-offset="200" data-bs-target=".navbar">
+    <!-- Barra de Navegação -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container nav-cont">
+        <a class="navbar-brand" href="/" onclick="esconder(false)"><img src="./img/logo.png" alt=""></a>
+        <button id="toggler" class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
+          data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+          aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="upload.html" onclick="esconder()">Upload</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" onclick="esconder()">Perfil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" onclick="esconder()">Logout</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- Header -->
+    <header>
+      <div class="container text-center">
+            <h1 class="title1-light">Sobre</h1>
+            <h2 class="subtitle-light">Mais informações acerca deste projeto</h2>
+      </div>
+    </header>
+
+    <section class="section-space">
+        <div class="row ">
+            <div class="col-md-6">
+                <img class="img-circular" src="IMAGEM DO DIOGO" alt="Diogo Silva">
+                <h5 class="paragraph-light">Diogo Silva</h5>
+                <p class="paragraph-light">NºMec: 108212
+                    <br>
+                    <a class="paragraph-light" href="mailto:dsgps@ua.pt">dsgps@ua.pt</a>
+                </p>
+
+            </div>
+
+            <div class="col-md-6">
+                <img class="img-circular" src="IMAGEM DO MARTIM" alt="Martim Carvalho">
+                <h5 class="paragraph-light">Martim Carvalho</h5>
+                <p class="paragraph-light">NºMec: 108749
+                    <br>
+                    <a class="paragraph-light" href="mailto:martimhcarvalho@ua.pt">martimhcarvalho@ua.pt</a>
+                </p>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 ">
+                <img class="img-circular" src="IMAGEM DO VILA" alt="Miguel Vila">
+                <h5 class="paragraph-light">Miguel Vila</h5>
+                <p class="paragraph-light">NºMec: 107276
+                    <br>
+                    <a class="paragraph-light" href="mailto:miguelovila@ua.pt">miguelovila@ua.pt</a>
+                </p>
+
+            </div>
+
+            <div class="col-md-6">
+                <img class="img-circular" src="IMAGEM DO REIS" alt="Miguel Reis">
+                <h5 class="paragraph-light">Miguel Reis</h5>
+                <p class="paragraph-light">NºMec: 108545
+                    <br>
+                    <a class="paragraph-light" href="mailto:mreis@ua.pt">mreis@ua.pt</a>
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+
+    
+    <footer class="footer-light section-space">
+        <div class="container text-center">
+            <div class="footer-text">
+                <p> Copyright © 2020 - All rights reserved.</p>
+            </div>
+        </div>
+
+    </footer>
+    <script src="./js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

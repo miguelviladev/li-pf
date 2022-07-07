@@ -1,0 +1,33 @@
+header {
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .paragraph-light {
+    font-weight: 500;
+    margin: auto;
+    text-align: center;
+  }
+
+  .title1-light {
+    margin-bottom: 2rem;
+  }
+
+  .btn {
+    max-width:200px;
+  }
+
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .footer-text {
+    margin: 0px;
+    line-height: 1.6;
+  }
