@@ -18,3 +18,7 @@ header {
 .btn {
   max-width: 200px;
 }
+
+#a-button-action {
+  display: contents;
+}

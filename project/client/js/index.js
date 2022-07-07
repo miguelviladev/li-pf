@@ -8,10 +8,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     };
     const response = await (await fetch('/api/users/valid', options)).json();
     if (response.authentication == 'ERROR') {
-        a_button_action.attributes.href = '/signin';
+        a_button_action.setAttribute('href', '/signin');
         button_action.innerHTML = 'Autenticação <i class="fa-solid fa-key"></i>';
     } else  {
-        a_button_action.attributes.href = '/feed';
+        a_button_action.setAttribute('href', '/gallery');
         button_action.innerHTML = 'Ver Galeria <i class="fa-solid fa-images"></i>';
     };
  }, false);
