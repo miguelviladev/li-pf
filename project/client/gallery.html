@@ -11,7 +11,7 @@
     <!-- CSS Personalizado -->
     <link rel="stylesheet" href="./css/global-style.css" />
     <link rel="stylesheet" href="./css/navbar-style.css" />
-    <link rel="stylesheet" href="./css/index-style.css" />
+    <link rel="stylesheet" href="./css/gallery-style.css" />
     <!-- JS Personalizado -->
     <script src="./js/navbar.js"></script>
     <!-- Favicon -->
@@ -31,13 +31,13 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="esconder()">Upload</a>
+              <a class="nav-link" href="upload.html" onclick="esconder()">Upload</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#" onclick="esconder()">Perfil</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#" onclick="esconder()">Logout</a>
+              <a class="nav-link" onclick="esconder()">Logout</a>
             </li>
           </ul>
         </div>
@@ -51,8 +51,10 @@
           </div>
       </div>
     </header>
+
+    <!-- Galeria -->
     <section class="section-space">
-        <div class="container">
+        <div class="container card-deck">
         <div class="row align-items-start">
           <div class="col-sm">
             <div class="card">
@@ -61,6 +63,7 @@
                 <h5 class="card-title paragraph-dark">Coleção 1</h5>
                 <p class="card-text paragraph-dark">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 <a href="#" class="btn btn-primary">Ver Coleção</a>
+                <p class="card-text"><small class="text-muted">Last updated x mins ago</small></p>
               </div>
             </div>
           </div>
@@ -71,6 +74,7 @@
                 <h5 class="card-title paragraph-dark">Coleção 2</h5>
                 <p class="card-text paragraph-dark">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 <a href="#" class="btn btn-primary">Ver Coleção</a>
+                <p class="card-text"><small class="text-muted">Last updated x mins ago</small></p>
               </div>
             </div>
           </div>
@@ -81,6 +85,7 @@
                 <h5 class="card-title paragraph-dark">Coleção 3</h5>
                 <p class="card-text card-title paragraph-dark">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                 <a href="#" class="btn btn-primary">Ver Coleção</a>
+                <p class="card-text"><small class="text-muted">Last updated x mins ago</small></p>
               </div>
             </div>
           </div>
@@ -89,7 +94,7 @@
     </section>
 
     <section class="section-space">
-      <div class="container">
+      <div class="container card-deck">
       <div class="row align-items-start">
         <div class="col-sm">
           <div class="card">
@@ -98,6 +103,7 @@
               <h5 class="card-title paragraph-dark">Coleção 4</h5>
               <p class="card-text paragraph-dark">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               <a href="#" class="btn btn-primary">Ver Coleção</a>
+              <p class="card-text"><small class="text-muted">Last updated x mins ago</small></p>
             </div>
           </div>
         </div>
@@ -108,6 +114,7 @@
               <h5 class="card-title paragraph-dark">Coleção 5</h5>
               <p class="card-text paragraph-dark">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               <a href="#" class="btn btn-primary">Ver Coleção</a>
+              <p class="card-text"><small class="text-muted">Last updated x mins ago</small></p>
             </div>
           </div>
         </div>
@@ -118,6 +125,7 @@
               <h5 class="card-title paragraph-dark">Coleção 6</h5>
               <p class="card-text card-title paragraph-dark">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
               <a href="#" class="btn btn-primary">Ver Coleção</a>
+              <p class="card-text"><small class="text-muted">Last updated x mins ago</small></p>
             </div>
           </div>
         </div>
@@ -127,6 +135,14 @@
 
     
 
+  <footer class="footer-light section-space">
+    <div class="container text-center">
+        <div class="footer-text">
+            <p> Copyright © 2020 - All rights reserved.</p>
+        </div>
+    </div>
+
+  </footer>
     <script src="./js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
