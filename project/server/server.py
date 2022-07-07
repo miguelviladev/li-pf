@@ -1,4 +1,3 @@
-from matplotlib import collections
 import cherrypy
 import secrets
 import string
@@ -9,6 +8,7 @@ from sqlcon import *
 import os
 
 class Root(object):
+
     def __init__(self):
         self.api = Api()
 
@@ -121,16 +121,25 @@ class Root(object):
             </html>
         """
 
+
+
+
 class Api(object):
+
     def __init__(self):
         self.users = Users()
         self.pages = Pages()
+        self.cromos = Cromos()
 
     @cherrypy.expose
     def index(self):
         raise cherrypy.HTTPRedirect("/")
 
+
+
+
 class Pages():
+
     @cherrypy.expose
     def index(self):
         raise cherrypy.HTTPRedirect("/")
@@ -168,7 +177,11 @@ class Pages():
         else:
             return {"status": "FORBIDDEN", "body": ""}
 
+
+
+
 class Users():
+
     @cherrypy.expose
     def index(self):
         raise cherrypy.HTTPRedirect("/")
@@ -213,6 +226,54 @@ class Users():
             password = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(8))
             executor("INSERT INTO users (username, password, owimages) VALUES (?, ?, '')",(body["username"], password))
             return {"creation": "OK", "password": "{}".format(password)}
+
+
+
+@cherrypy.popargs("id")
+class Cromos():
+
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    def index(self, id = None):
+      collectionsDB = self.db.getData("collections", ["id", "name", "owner"], "1" if id is None else "id = '" + id + "'")
+      collections = []
+      for row in collectionsDB:
+          images = self.db.getData("images", ["id", "name", "owner", "collectionId", "logs"], "collectionId = '" + str(row[0]) + "'")
+          if len(images) == 0:
+              continue
+          collection = {
+              "id": row[0],
+              "name": row[1],
+              "owner": row[2],
+              "images": []
+          }
+          for image in images:
+              collection["images"].append({
+                  "id": image[0],
+                  "name": image[1],
+                  "owner": image[2],
+                  "logs": image[3]
+              })
+          collections.append(collection)
+
+      return collections if id is None else collections[0]
+
+
+
+
+
+
+
+
+
+
+
+
+
+      return selector("SELECT * FROM images", ())
+
+
+
 
 if __name__ == '__main__':
     cherrypy.config.update({'server.socket_port': 10005})
