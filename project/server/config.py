@@ -7,6 +7,8 @@ STORAGE_DB = os.path.normpath(os.path.join(STORAGE, '../storage/database.db'))
 LANDING_PAGE = os.path.normpath(os.path.join(SERVER, '../client/landing.html'))
 SIGNIN_PAGE_BODY = os.path.normpath(os.path.join(SERVER, '../client/body-signin.html'))
 SIGNUP_PAGE_BODY = os.path.normpath(os.path.join(SERVER, '../client/body-signup.html'))
+COLLECTIONS_PAGE= os.path.normpath(os.path.join(SERVER, '../client/collections.html'))
+ABOUT_PAGE= os.path.normpath(os.path.join(SERVER, '../client/about.html'))
 
 SERVER_CONFIG = {
     '/': {

@@ -5,7 +5,7 @@ container.addEventListener('click', function (e) {
     if (e.target.id == 'register-button') {
       doRegister(e);
     };
-    if (e.target.id == 'copyButton') {
+    if (e.target.id == 'copyButton' || e.target.id == 'copyIcon') {
         doCopy(e);
     };
     if (e.target.id == 'username') {
