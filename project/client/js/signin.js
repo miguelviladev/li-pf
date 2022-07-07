@@ -1,6 +1,13 @@
-const login_button = document.getElementById('login-button');
-
-login_button.addEventListener('click', doLogin);
+const container = document.getElementsByTagName('main')[0];
+container.addEventListener('click', function (e) {
+    if (e.target.id == 'login-button') {
+      doLogin(e);
+    };
+    if (e.target.id == 'username' || e.target.id == 'password') {
+        document.getElementById("username").classList.remove('is-invalid');
+        document.getElementById("password").classList.remove('is-invalid');
+    };
+  });
 
 async function doLogin(e) {
     e.preventDefault();
@@ -15,7 +22,8 @@ async function doLogin(e) {
     if (response.authentication == 'OK') {
         writeToken(response.token);
     } else  {
-        alert('Login failed');
+        document.getElementById('username').classList.add('is-invalid');
+        document.getElementById('password').classList.add('is-invalid');
     }
 };
 
