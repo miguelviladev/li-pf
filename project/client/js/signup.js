@@ -1,13 +1,22 @@
-const register_button = document.getElementById('register-button');
-const copy_button = document.getElementById('copyButton');
-const password_input = document.getElementById('password');
 
-register_button.addEventListener('click', doRegister);
-copy_button.addEventListener('click', doCopy);
+
+const container = document.getElementsByTagName('main')[0];
+container.addEventListener('click', function (e) {
+    if (e.target.id == 'register-button') {
+      doRegister(e);
+    };
+    if (e.target.id == 'copyButton') {
+        doCopy(e);
+    };
+    if (e.target.id == 'username') {
+        document.getElementById("username").classList.remove('is-invalid');
+    };
+  });
 
 async function doRegister(e) {
     e.preventDefault();
     const username = document.getElementById('username').value;
+    const register_button = document.getElementById('register-button');
     
     const options = {
         method: 'POST',
@@ -19,10 +28,10 @@ async function doRegister(e) {
         document.getElementById("password").value = response.password;
         register_button.style.display = "none";
     } else  {
-        alert('Registration failed');
+        document.getElementById('username').classList.add('is-invalid');
     }
 };
 
 function doCopy() {
-    navigator.clipboard.writeText(password_input.value);
+    navigator.clipboard.writeText(document.getElementById('password').value);
 }

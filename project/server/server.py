@@ -65,7 +65,52 @@ class Root(object):
 
     @cherrypy.expose
     def signup(self):
-        return open(SIGNUP_PAGE).read()
+        return """
+            <!DOCTYPE html>
+            <html lang="pt-PT">
+              <head>
+                 <!-- Meta Tags Necessárias -->
+                 <meta charset="UTF-8" />
+                 <meta name="viewport" content="width=device-width, initial-scale=1" />
+                 <!-- CSS do Bootstrap -->
+                 <link rel="stylesheet" href="./css/bootstrap.min.css" />
+                 <!-- CSS do FontAwesome -->
+                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+                 <!-- CSS Personalizado -->
+                 <link rel="stylesheet" href="./css/global-style.css" />
+                 <link rel="stylesheet" href="./css/navbar-style.css" />
+                 <link rel="stylesheet" href="./css/signinup-style.css" />
+                 <!-- JS Personalizado -->
+                 <script type="module" src="./js/authrestriction.js"></script>
+                 <script src="./js/navbar.js"></script>
+                 <!-- Favicon -->
+                 <link rel="icon" type="image/x-icon" href="./img/favicon.png">
+                 <title>Criar Conta</title>
+              </head>
+              <body data-bs-spy="scroll" data-bs-offset="200" data-bs-target=".navbar">
+                <main>
+                  <script>
+                    async function verify() {
+                      const options = {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({"token": localStorage.getItem('token')})
+                      };
+                      const response = await (await fetch('/api/pages/signup', options)).json();
+                      if (response.status == 'OK') {                 
+                        document.getElementsByTagName('main')[0].innerHTML = response.body
+                      } else {
+                        window.location.href = '/';
+                      }
+                    };
+                    verify();
+                  </script>
+                </main>
+                <script src="./js/signup.js"></script>
+                <script src="./js/bootstrap.bundle.min.js"></script>
+              </body>
+            </html>
+        """
 
 class Api(object):
     def __init__(self):
@@ -89,6 +134,17 @@ class Pages():
         expiration = selector("SELECT expiration FROM users WHERE access_token = ?", (body["token"],))
         if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
             return {"status": "OK", "body": open(SIGNIN_PAGE_BODY).read()}
+        else:
+            return {"status": "FORBIDDEN", "body": ""}
+    
+    @cherrypy.expose
+    @cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
+    def signup(self):
+        body = cherrypy.request.json
+        expiration = selector("SELECT expiration FROM users WHERE access_token = ?", (body["token"],))
+        if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
+            return {"status": "OK", "body": open(SIGNUP_PAGE_BODY).read()}
         else:
             return {"status": "FORBIDDEN", "body": ""}
 
