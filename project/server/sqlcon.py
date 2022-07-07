@@ -9,19 +9,32 @@ def initializeDatabase():
             cursor = connection.cursor()
             cursor.execute("""
                 CREATE TABLE users (
-                    username TEXT PRIMARY KEY,
-                    password TEXT,
-                    ownerships TEXT,
-                    access_token TEXT,
-                    expiration INTEGER)""")
-            cursor.execute("""CREATE TABLE images (
-                    identifier TEXT PRIMARY KEY,
-                    nomen TEXT,
-                    original_path TEXT,
-                    protected_path TEXT,
-                    owner TEXT,
-                    collection TEXT,
-                    history TEXT)
+                    username TEXT NOT NULL PRIMARY KEY,
+                    password TEXT NOT NULL,
+                    owimages TEXT)
+            """)
+            cursor.execute("""
+                CREATE TABLE tokens (
+                    token TEXT NOT NULL PRIMARY KEY,
+                    expiry INTEGER NOT NULL,
+                    username TEXT NOT NULL)
+            """)
+            cursor.execute("""
+                CREATE TABLE images (
+                    identifier INTEGER PRIMARY KEY AUTOINCREMENT,
+                    collection INTEGER NOT NULL,
+                    extension TEXT NOT NULL,
+                    path TEXT NOT NULL,
+                    hash TEXT NOT NULL,
+                    name TEXT NOT NULL,
+                    history TEXT,
+                    owner TEXT)
+            """)
+            cursor.execute("""
+                CREATE TABLE collections (
+                    identifier INTEGER PRIMARY KEY AUTOINCREMENT,
+                    owner TEXT NOT NULL,
+                    name TEXT NOT NULL)
             """)
             connection.commit()
             connection.close()
