@@ -140,7 +140,7 @@ class Pages():
     @cherrypy.tools.json_out()
     def landing(self):
       body = cherrypy.request.json
-      expiration = selector("SELECT expiration FROM users WHERE access_token = ?", (body['token'],))
+      expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body['token'],))
       if body['token'] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
         return {'status': 'OK1', 'body': '<a id="a-button-action" href="/signin"><button id="button-action" type="button" class="btn btn-primary">Autenticação <i class="fa-solid fa-key"></i></button></a>'}
       else:
@@ -151,7 +151,7 @@ class Pages():
     @cherrypy.tools.json_out()
     def signin(self):
         body = cherrypy.request.json
-        expiration = selector("SELECT expiration FROM users WHERE access_token = ?", (body["token"],))
+        expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body['token'],))
         if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
             return {"status": "OK", "body": open(SIGNIN_PAGE_BODY).read()}
         else:
@@ -162,7 +162,7 @@ class Pages():
     @cherrypy.tools.json_out()
     def signup(self):
         body = cherrypy.request.json
-        expiration = selector("SELECT expiration FROM users WHERE access_token = ?", (body["token"],))
+        expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body['token'],))
         if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
             return {"status": "OK", "body": open(SIGNUP_PAGE_BODY).read()}
         else:
@@ -182,8 +182,7 @@ class Users():
         if len(user) == 1:
             token = secrets.token_hex(4)
             expire = int(time.time()) + 7200
-            executor("UPDATE users SET access_token = ? WHERE username = ?",(token, body["username"]))
-            executor("UPDATE users SET expiration = ? WHERE username = ?",(expire, body["username"]))
+            executor("INSERT INTO tokens (token, expiry, username) VALUES (?, ?, ?)",(token, expire, body["username"],))
             return {"authentication": "OK","token": "{}".format(token)}
         else:
             return {"authentication": "ERROR","token": ""}
@@ -193,7 +192,7 @@ class Users():
     @cherrypy.tools.json_out()
     def valid(self):
         body = cherrypy.request.json
-        expiration = selector("SELECT expiration FROM users WHERE access_token = ?", (body["token"],))
+        expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body["token"],))
         if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
             return {"authentication": "ERROR"}
         else:
@@ -212,7 +211,7 @@ class Users():
             return {"creation": "ERROR","password": ""}
         else:
             password = ''.join(random.choice(string.ascii_letters + string.digits) for _ in range(8))
-            executor("INSERT INTO users (username, password, ownerships, access_token, expiration) VALUES (?, ?, '', '', 0)",(body["username"], password))
+            executor("INSERT INTO users (username, password, owimages) VALUES (?, ?, '')",(body["username"], password))
             return {"creation": "OK", "password": "{}".format(password)}
 
 if __name__ == '__main__':
