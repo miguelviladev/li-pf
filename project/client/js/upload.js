@@ -21,11 +21,18 @@ $(function () {
     });
 });
 
+$(function () {
+    $('#new-button').on('click', function () {
+        collectionName.style.display = 'block';
+    });
+});
+
 /*  ==========================================
     SHOW UPLOADED IMAGE NAME
  ========================================== */
 var input = document.getElementById('upload');
 var infoArea = document.getElementById('upload-label');
+var collectionName = document.getElementById('collection-label');
 
 input.addEventListener('change', showFileName);
 
@@ -35,4 +42,5 @@ function showFileName(event) {
     infoArea.style.display = 'block';
     document.getElementById('ImageName').value = fileName;
     document.getElementById('upload-button').disabled = false;
+
 }

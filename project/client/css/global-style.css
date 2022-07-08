@@ -114,3 +114,8 @@ img {
   box-shadow: none !important;
 }
 
+::selection {
+	background-color: #d32f2f;
+	color: white;
+}
+

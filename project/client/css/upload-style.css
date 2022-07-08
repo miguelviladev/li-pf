@@ -9,14 +9,11 @@ header {
 	font-weight: 500;
 	margin: auto;
 	text-align: center;
+	margin-bottom: 2%;
 }
 
 .title1-light {
 	margin-bottom: 2rem;
-}
-
-.btn {
-	max-width: 200px;
 }
 
 
@@ -35,17 +32,22 @@ footer {
 
 #upload-button {
 	margin: 2%
-
 }
 
 #upload-button:disabled {
-	background-color:#e9ecef;
+	background-color: #e9ecef;
 	color: black;
 
 }
 
 
 #upload-label {
+	margin: 5%;
+	display: none;
+
+}
+
+#collection-label {
 	margin: 5%;
 	display: none;
 	
@@ -57,21 +59,30 @@ footer {
 	padding: 30%;
 }
 
-.image-area:hover{
+.image-area:hover {
 	background-color: rgb(117, 117, 117);
 	color: #d32f2f;
 	cursor: pointer;
 }
 
 .section-space {
-	margin:0;
+	margin: 2%;
 }
 
 input[type=file] {
-    display: none;
+	display: none;
 }
 
 .form-control {
 	color: black;
 	font-size: large;
+}
+
+.account-form {
+	width: 100%;
+	max-width: 400px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
 }

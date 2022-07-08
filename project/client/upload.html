@@ -53,29 +53,62 @@
         <header>
             <div class="row justify-content-center">
                 <div class="title1-light">
-                    <h1>Upload an Image</h1>
+                    <h1>Upload de Imagem</h1>
                 </div>
             </div>
         </header>
+
+        <section class="section-space">
+            <div class="row justify-content-center">
+                <div class="col-md-2 justify-content-center">
+                    <button id="new-button" type="button" class="btn btn-primary btn-block mb-4"><i class="fa-solid fa-circle-plus"></i>  Nova coleção</button>
+                </div>
+                <div class="col-md-2">
+                    <div class="dropdown">
+                        <button
+                            class="btn btn-primary dropdown-toggle"
+                            type="button"
+                            id="dropdownMenuButton"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                        >
+                            Escolher coleção
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="account-form">
+                    <input
+                        id="collection-label"
+                        class="form-control py-2 border-right-0 border mb-4 shadow-none"
+                        placeholder="Nome da coleção"
+                        id="CollectionName"
+                    />
+                </div>
+            </div>
+        </section>
 
         <section class="section-space text-center">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 mx-auto">
                         <label class="image-area" for="upload">
-                            <i class="fa-solid fa-upload fa-2xl"></i>
+                            <i class="fa-solid fa-circle-arrow-up fa-2xl"></i>
                             <input id="upload" type="file" onchange="readURL(this);" />
                         </label>
                     </div>
                 </div>
                 <div class="row">
                     <div id="upload-label" class="col-lg-6 mx-auto">
-                        <input  class="form-control py-2 border-right-0 border mb-4 shadow-none" placeholder="Nome da coleção" id="CollectionName" />
-                        <input
-                            class="form-control py-2 border-right-0 border mb-4 shadow-none"
-                            type="text"
-                            id="ImageName"
-                        />
+                        <p class="paragraph-light text-center">Nome da Imagem:</p>
+                        <input class="form-control py-2 border-right-0 border mb-4 shadow-none" type="text" id="ImageName" />
                     </div>
                 </div>
                 <div class="row">

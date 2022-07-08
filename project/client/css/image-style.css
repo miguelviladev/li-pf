@@ -1,0 +1,17 @@
+.wrapper {
+    display: flex;
+    width: 100%;
+}
+
+.image-label {
+    margin: 5%;
+    max-width: 43%;
+}
+
+.image-label-text {
+    margin: 5%;
+}
+
+.section-space {
+    margin-top: 5%;
+}
