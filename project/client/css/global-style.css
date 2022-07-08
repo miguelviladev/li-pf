@@ -114,6 +114,14 @@ img {
   box-shadow: none !important;
 }
 
+<<<<<<< HEAD
 .space-navbar {
   margin-top: 80px;
 }
+=======
+::selection {
+	background-color: #d32f2f;
+	color: white;
+}
+
+>>>>>>> 774aabdf19578936b16ed81c462462e2161c7b5e
