@@ -22,3 +22,7 @@ header {
 #a-button-action {
   display: contents;
 }
+
+#logo {
+  max-width: 55%; 
+}
