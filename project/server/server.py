@@ -30,7 +30,52 @@ class Root(object):
       
     @cherrypy.expose
     def upload(self):
-        return open(UPLOAD_PAGE).read()
+        return """
+            <!DOCTYPE html>
+            <html lang="pt-PT">
+              <head>
+                <!-- Meta Tags Necessárias -->
+                <meta charset="UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <!-- CSS do Bootstrap -->
+                <link rel="stylesheet" href="./css/bootstrap.min.css" />
+                <!-- CSS do FontAwesome -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+                <!-- CSS Personalizado -->
+                <link rel="stylesheet" href="./css/global-style.css" />
+                <link rel="stylesheet" href="./css/navbar-style.css" />
+                <link rel="stylesheet" href="./css/upload-style.css" />
+                <!-- JS Personalizado -->
+                <script src="./js/navbar.js"></script>
+                <!-- Favicon -->
+                <link rel="icon" type="image/x-icon" href="./img/favicon.png" />
+                <title>Upload</title>
+              </head>
+              <body data-bs-spy="scroll" data-bs-offset="200" data-bs-target=".navbar">
+                <main>
+                  <script>
+                    async function verify() {
+                      const options = {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({"token": localStorage.getItem('token')})
+                      };
+                      const response = await (await fetch('/api/pages/upload', options)).json();
+                      if (response.status == 'OK') {                 
+                        document.getElementsByTagName('main')[0].innerHTML = response.body;
+                      } else {
+                        window.location.href = '/';
+                      }
+                    };
+                    verify();
+                  </script>
+                </main>
+                <script src="./js/upload.js"></script>
+                <script src="./js/bootstrap.bundle.min.js"></script>
+                <script src="./js/jquery-3.6.0.min.js"></script>
+              </body>
+            </html>
+        """
 
     @cherrypy.expose
     def signin(self):
@@ -185,6 +230,16 @@ class Pages():
         else:
             return {"status": "FORBIDDEN", "body": ""}
 
+    @cherrypy.expose
+    @cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
+    def upload(self):
+        body = cherrypy.request.json
+        expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body['token'],))
+        if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
+            return {"status": "FORBIDDEN", "body": ""}
+        else:
+            return {"status": "OK", "body": open(UPLOAD_PAGE_BODY).read()}
 
 
 
@@ -243,44 +298,11 @@ class Cromos():
     @cherrypy.expose
     @cherrypy.tools.json_out()
     def index(self, id = None):
-      collectionsDB = self.db.getData("collections", ["id", "name", "owner"], "1" if id is None else "id = '" + id + "'")
-      collections = []
-      for row in collectionsDB:
-          images = self.db.getData("images", ["id", "name", "owner", "collectionId", "logs"], "collectionId = '" + str(row[0]) + "'")
-          if len(images) == 0:
-              continue
-          collection = {
-              "id": row[0],
-              "name": row[1],
-              "owner": row[2],
-              "images": []
-          }
-          for image in images:
-              collection["images"].append({
-                  "id": image[0],
-                  "name": image[1],
-                  "owner": image[2],
-                  "logs": image[3]
-              })
-          collections.append(collection)
-
-      return collections if id is None else collections[0]
-
-
-
-
-
-
-
-
-
-
-
-
-
-      return selector("SELECT * FROM images", ())
-
-
+      if id == None:
+        images = selector("SELECT * FROM images", ())
+      else:
+        images = selector("SELECT * FROM images WHERE collection = ?", (id,))
+      return images if len(images) > 0 else {"status": "ERROR", "message": "No images found"}
 
 
 if __name__ == '__main__':
