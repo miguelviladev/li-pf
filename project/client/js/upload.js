@@ -6,8 +6,10 @@ function readURL(input) {
         var reader = new FileReader();
 
         reader.onload = function (e) {
-            $('#imageResult')
-                .attr('src', e.target.result);
+            $('.image-area').html(`<img id="imageResult" src="${e.target.result}" alt="">`);
+            $('.image-area').css('background-color', 'transparent');
+            $('.image-area:hover').css('cursor', 'default');
+            $('.image-area').css('padding', '0');
         };
         reader.readAsDataURL(input.files[0]);
     }
@@ -30,5 +32,7 @@ input.addEventListener('change', showFileName);
 function showFileName(event) {
     var input = event.srcElement;
     var fileName = input.files[0].name;
-    infoArea.textContent = 'File name: ' + fileName;
+    infoArea.style.display = 'block';
+    document.getElementById('ImageName').value = fileName;
+    document.getElementById('upload-button').disabled = false;
 }
