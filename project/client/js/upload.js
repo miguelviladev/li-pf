@@ -12,38 +12,4 @@ function readURL(input) {
         };
         reader.readAsDataURL(input.files[0]);
     }
-<<<<<<< HEAD
 };
-=======
-}
-
-$(function () {
-    $('#upload').on('change', function () {
-        readURL(input);
-    });
-});
-
-$(function () {
-    $('#new-button').on('click', function () {
-        collectionName.style.display = 'block';
-    });
-});
-
-/*  ==========================================
-    SHOW UPLOADED IMAGE NAME
- ========================================== */
-var input = document.getElementById('upload');
-var infoArea = document.getElementById('upload-label');
-var collectionName = document.getElementById('collection-label');
-
-input.addEventListener('change', showFileName);
-
-function showFileName(event) {
-    var input = event.srcElement;
-    var fileName = input.files[0].name;
-    infoArea.style.display = 'block';
-    document.getElementById('ImageName').value = fileName;
-    document.getElementById('upload-button').disabled = false;
-
-}
->>>>>>> 774aabdf19578936b16ed81c462462e2161c7b5e
