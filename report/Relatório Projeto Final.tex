@@ -1,8 +1,62 @@
-\documentclass{article}
+\documentclass[12pt,a4paper]{report}
 \usepackage[utf8]{inputenc}
+\usepackage[top=0.70in, bottom=0.70in, left=0.8in,right=0.80in]{geometry}
+\usepackage[pdftex]{graphicx} 
 
-\title{Relatório Projeto Final}
-\author{ Engenharia de Computadores e Informática }
+
+%For the header and footer
+\usepackage{fancyhdr}
+\fancypagestyle{plain}{%
+\fancyfoot[L]{\emph{Departamento de Eletrónica, Telecomunicações e Informática }} % except the center
+\fancyfoot[R]{\thepage{}}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+}
+\pagestyle{fancy}
+\rhead{\emph{Projeto Final LABI2022G5}}
+\fancyfoot[LO,LE]{\emph{Departamento de Eletrónica, Telecomunicações e Informática }}
+\cfoot{}
+\fancyfoot[RO, RE]{\thepage}
+\renewcommand{\headrulewidth}{0.3pt}
+\renewcommand{\footrulewidth}{0.3pt}
+%For the header and footer Over
+
+%Page Border
+\usepackage{pgf}
+\usepackage{pgfpages}
+
+\pgfpagesdeclarelayout{boxed}
+{
+  \edef\pgfpageoptionborder{0pt}
+}
+{
+  \pgfpagesphysicalpageoptions
+  {%
+    logical pages=1,%
+  }
+  \pgfpageslogicalpageoptions{1}
+  {
+    border code=\pgfsetlinewidth{2pt}\pgfstroke,%
+    border shrink=\pgfpageoptionborder,%
+    resized width=.95\pgfphysicalwidth,%
+    resized height=.95\pgfphysicalheight,%
+    center=\pgfpoint{.5\pgfphysicalwidth}{.5\pgfphysicalheight}%
+  }%
+}
+\pgfpagesuselayout{boxed}
+\setlength{\parindent}{1cm}
+%GLOBAL SETTINGS OVER, DOCUMENT BEGINS
+
+
+
+
+
+
+
+
+\title{Relatório Projeto Final LABI}
+
+\author{Diogo Silva nMEC 108212}
 
 \date{Julho 2022}
 
