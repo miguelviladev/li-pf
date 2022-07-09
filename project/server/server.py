@@ -314,16 +314,16 @@ class Cromos():
 			text_to_remove = body["image"][:body["image"].index(",")]
 			base64_image = body["image"].replace(text_to_remove, "")
 
-			image_name = body["name"]
-			image_collection = body["collection"]
+			image_name = body["name"].capitalize()
+			image_collection = body["collection"].title()
 			image_extension = text_to_remove[text_to_remove.index("/")+1:text_to_remove.index(";")]
 			image_hash = hashImage(base64_image)
 			if selector("SELECT * FROM images WHERE hash = ?", (image_hash,)):
 						return {"status": "ERROR","message": "similar image already exists"}
 
-			os.makedirs(os.path.normpath(os.path.join(STORAGE,"temporary/")), exist_ok=False)
-			os.makedirs(os.path.normpath(os.path.join(STORAGE,"protected/")), exist_ok=False)
-			os.makedirs(os.path.normpath(os.path.join(STORAGE,"original/")), exist_ok=False)
+			os.makedirs(os.path.normpath(os.path.join(STORAGE,"temporary/")), exist_ok=True)
+			os.makedirs(os.path.normpath(os.path.join(STORAGE,"protected/")), exist_ok=True)
+			os.makedirs(os.path.normpath(os.path.join(STORAGE,"original/")), exist_ok=True)
 
 			temp_image_path = os.path.normpath(os.path.join(STORAGE,f"temporary/{image_hash}.{image_extension}"))
 			water_image_path = os.path.normpath(os.path.join(STORAGE,f"protected/{image_hash}.{image_extension}"))
@@ -332,7 +332,12 @@ class Cromos():
 			writeImage(base64_image, temp_image_path)
 			writeWatermarkedImage(temp_image_path, water_image_path, WATERMARK)
 			writeImage(encryptImage(base64_image), original_image_path)
+
 			executor("INSERT INTO images (name, collection, hash, extension) VALUES (?, ?, ?, ?)",(image_name, image_collection, image_hash, image_extension))
+
+			if not selector("SELECT * FROM collections WHERE name = ?", (image_collection,)):
+						owner = selector("SELECT username FROM tokens WHERE token = ?", (body["token"],))[0][0]
+						executor("INSERT INTO collections (name, owner) VALUES (?, ?)",(image_collection, owner,))
 			return {"status": "OK"}
 
 if __name__ == '__main__':

@@ -62,5 +62,5 @@ async function doUpload(e) {
 };
 
 function validateName(name) {
-    return /^[A-Za-z0-9 -]*$/.test(name) && name.length > 0;
+    return /^[A-Za-z -]*$/.test(name) && name.length > 0;
   }
