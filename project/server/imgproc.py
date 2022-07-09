@@ -1,3 +1,4 @@
+import base64
 import sys
 import os
 import io
@@ -8,7 +9,7 @@ from config import *
 
 def hashImage(base64_img):
     hash = SHA256.new()
-    hash.update(base64_img)
+    hash.update(base64_img.encode('utf-8'))
     return hash.hexdigest()
 
 def encryptImage(content):
@@ -17,8 +18,8 @@ def encryptImage(content):
 def decryptImage(content):
     return unpad(AES.new(KEY, AES.MODE_ECB).decrypt(content), BLOCKSIZE)
 
-def writeImage(content, filename, extension):
-    with open(f"{filename}.{extension}", "wb") as file:
+def writeImage(content, filename):
+    with open(filename, "wb") as file:
         file.write(base64.b64decode(content))
 
 def writeWatermarkedImage(input_image_path, output_image_path, watermark_image_path, text = ""):
@@ -51,10 +52,10 @@ def writeWatermarkedImage(input_image_path, output_image_path, watermark_image_p
     fontsize = 1
     img_fraction = 0.75
 
-    font = ImageFont.truetype("arial.ttf", fontsize)
+    font = ImageFont.truetype(FONT, fontsize)
     while font.getsize(text)[0] < img_fraction*base_image.size[0] and font.getsize(text)[1] < watermark.height / 2:
         fontsize += 1
-        font = ImageFont.truetype("arial.ttf", fontsize)
+        font = ImageFont.truetype(FONT, fontsize)
         
     fontsize -= 1
     

@@ -3,6 +3,8 @@ import os
 SERVER  = os.path.abspath(os.path.dirname(__file__))
 STORAGE = os.path.normpath(os.path.join(SERVER, '../storage'))
 STORAGE_DB = os.path.normpath(os.path.join(STORAGE, '../storage/database.db'))
+WATERMARK = os.path.normpath(os.path.join(SERVER, '../client/img/logo.png'))
+FONT = os.path.normpath(os.path.join(STORAGE, 'arial.ttf'))
 KEY = b'umapasswordfixe!'
 BLOCKSIZE = 16
 

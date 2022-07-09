@@ -1,7 +1,6 @@
 import cherrypy
 import secrets
 import string
-import base64
 import random
 import time
 import os
@@ -319,6 +318,12 @@ class Cromos():
       image_collection = body["collection"]
       image_extension = text_to_remove[text_to_remove.index("/")+1:text_to_remove.index(";")]
       image_hash = hashImage(base64_image)
+
+      temp_image_path = os.path.normpath(os.path.join(STORAGE,f"temp/{image_hash}.{image_extension}"))
+      water_image_path = os.path.normpath(os.path.join(STORAGE,f"watermarked/{image_hash}.{image_extension}"))
+
+      writeImage(base64_image, temp_image_path)
+      writeWatermarkedImage(temp_image_path, water_image_path, WATERMARK)
 
 
 
