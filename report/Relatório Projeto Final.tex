@@ -1,7 +1,21 @@
-\documentclass[12pt,a4paper]{report}
+\documentclass{report}
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
-\usepackage[top=0.70in, bottom=0.70in, left=0.8in,right=0.80in]{geometry}
-\usepackage[pdftex]{graphicx} 
+\usepackage[backend=biber, style=ieee]{biblatex}
+\usepackage{csquotes}
+\usepackage[portuguese]{babel}
+\usepackage{blindtext}
+\usepackage[printonlyused]{acronym}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{subcaption}
+
+%%\bibliography{bibliografia}
+%%\setlength{\parskip}{0.39em}
+%%\newcommand{\centered}[1]{\begin{tabular}{l} #1 \end{tabular}}
 
 
 %For the header and footer
@@ -14,11 +28,11 @@
 }
 \pagestyle{fancy}
 \rhead{\emph{Projeto Final LABI2022G5}}
-\fancyfoot[LO,LE]{\emph{Departamento de Eletrónica, Telecomunicações e Informática }}
+\fancyfoot[LO,L]{\emph{Departamento de Eletrónica, Telecomunicações e Informática }}
 \cfoot{}
 \fancyfoot[RO, RE]{\thepage}
-\renewcommand{\headrulewidth}{0.3pt}
-\renewcommand{\footrulewidth}{0.3pt}
+\renewcommand{\headrulewidth}{0.1pt}
+\renewcommand{\footrulewidth}{0.1pt}
 %For the header and footer Over
 
 %Page Border
@@ -45,24 +59,64 @@
 }
 \pgfpagesuselayout{boxed}
 \setlength{\parindent}{1cm}
-%GLOBAL SETTINGS OVER, DOCUMENT BEGINS
 
 
 
-
-
-
-
-
-\title{Relatório Projeto Final LABI}
-
-\author{Diogo Silva nMEC 108212}
-
-\date{Julho 2022}
 
 \begin{document}
+%%% DEFINIÇÕES GLOBAIS %%%
+\def\titulo{Projeto Final LABI2022}
+\def\data{Aveiro, julho 2021}
+\def\autores{Miguel Vila, Diogo Silva, Miguel Reis, Martim Carvalho}
+\def\autorescontactos{(107276) \href{mailto:miguelovila@ua.pt}{miguelovila@ua.pt}, (108212) \href{mailto:dsgps@ua.pt}{dsgps@ua.pt}, (108545) \href{mailto:mreis@ua.pt}{mreis@ua.pt}, (108749) \href{mailto:martimhcarvalho@ua.pt}{martimhcarvalho@ua.pt}}
+\def\projetocodeua{\url{http://code.ua.pt/projects/labi2022g5}}
+\def\departamento{DETI}
+\def\empresa{UNIVERSIDADE DE AVEIRO}
+\def\logotipo{ua.pdf}
 
+%%% ESTRUTURA CAPA %%%
+\begin{titlepage}
+\begin{center}
+\vspace*{20mm}
+{\Huge \titulo}\\ 
+\vspace{10mm}
+{\Large \empresa}\\
+\vspace{10mm}
+{\LARGE \autores}\\ 
+\vspace{30mm}
+\begin{figure}[h]
+\center
+\includegraphics{\logotipo}
+\end{figure}
+\vspace{20mm}
+\end{center}
+\begin{flushright}
+\end{flushright}
+\end{titlepage}
+
+%%%  PÁGINA DE TÍTULO %%%
+\title{%
+{\Huge\textbf{\titulo}}\\
+{\Large \departamento\\ \empresa}
+}
+\author{
+    \autores\\\\\
+    \autorescontactos\\\\\\\
+    \projetocodeua\\
+}
+\date{\data}
 \maketitle
+\pagenumbering{roman}
+
+%%% OBJETIVOS %%%
+\renewcommand{\abstractname}{OBJETIVOS DO PROJETO}
+\begin{abstract}
+
+Neste trabalho foi nos pedido para elaborar um site online com o objetivo dos seus utilizadores poderem armazenar as suas imagens de forma rapida de intuitiva. 
+Alem de poderem armazenarem as imagens, os utilizadores poderao tambem publicar no site as suas proprias criacoes, formando uma colecao visivel a qualquer utilizador, e disponivel para ser requisitada por qualquer um que esteja registado.
+Todas as imagens colocadas no site serao sujeitas a uma marca de agua gerada pelo site, como o logo do mesmo com o objetivo de garantir a autenticidade das mesmas.
+Tal como foi dito, cada imagem tem a sua marca de agua, onde estara o logo do site e o nome do usuario que a possui, para que nao surjam copias e garantindo o valor das mesmas. Para as imagens poderem ser trocadas pelos diversos utilizadores, foi tambem criado um sistema de envio das imagens, basta aceder a sua colecao e, ao selecionar a imagem devera introduzir o nome de utilizador a quem deseja enviar a imagem e, instantaneamente estara na colecao da outra pessoa.
+\end{abstract}
 
 
 
