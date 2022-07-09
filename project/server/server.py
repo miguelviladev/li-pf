@@ -318,14 +318,17 @@ class Cromos():
 			image_collection = body["collection"]
 			image_extension = text_to_remove[text_to_remove.index("/")+1:text_to_remove.index(";")]
 			image_hash = hashImage(base64_image)
-			print("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
 			if selector("SELECT * FROM images WHERE hash = ?", (image_hash,)):
-						print("bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
 						return {"status": "ERROR","message": "similar image already exists"}
-			print("cccccccccccccccccccccccccccccccccccccccccccccccccccccc")
+
+			os.makedirs(os.path.normpath(os.path.join(STORAGE,"temporary/")), exist_ok=False)
+			os.makedirs(os.path.normpath(os.path.join(STORAGE,"protected/")), exist_ok=False)
+			os.makedirs(os.path.normpath(os.path.join(STORAGE,"original/")), exist_ok=False)
+
 			temp_image_path = os.path.normpath(os.path.join(STORAGE,f"temporary/{image_hash}.{image_extension}"))
 			water_image_path = os.path.normpath(os.path.join(STORAGE,f"protected/{image_hash}.{image_extension}"))
 			original_image_path = os.path.normpath(os.path.join(STORAGE,f"original/{image_hash}.{image_extension}"))
+
 			writeImage(base64_image, temp_image_path)
 			writeWatermarkedImage(temp_image_path, water_image_path, WATERMARK)
 			writeImage(encryptImage(base64_image), original_image_path)
