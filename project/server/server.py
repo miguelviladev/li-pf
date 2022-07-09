@@ -1,6 +1,7 @@
 import cherrypy
 import secrets
 import string
+import base64
 import random
 import time
 from config import *
@@ -305,9 +306,15 @@ class Cromos():
       return images if len(images) > 0 else {"status": "ERROR", "message": "No images found"}
 
     @cherrypy.expose
+    @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def upload(self):
-      print(cherrypy.request.body.read())
+      body = cherrypy.request.json
+      text_to_remove = body["image"][:body["image"].index(",")]
+      extension = text_to_remove[text_to_remove.index("/")+1:text_to_remove.index(";")]
+      encodedImage = body["image"].replace(text_to_remove, "")
+      with open(f"imageToSave.{extension}", "wb") as file:
+        file.write(base64.b64decode(encodedImage))
       return {"status": "OK"}
 
 

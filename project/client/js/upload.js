@@ -33,7 +33,8 @@ async function doUpload(e) {
     reader.addEventListener("load", async function(e) {
         const options = {
             method: 'POST',
-            headers: {'Content-Type': 'text/html;charset=utf-8'},
+            //headers: {'Content-Type': 'text/html;charset=utf-8'},
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({"token": token, "name": name, "collection": collection, "image": e.target.result})
         };
         const response = await (await fetch('/api/cromos/upload', options)).json();
