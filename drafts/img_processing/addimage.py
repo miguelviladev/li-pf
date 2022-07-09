@@ -52,11 +52,11 @@ def hashimage(img):
     return hash.hexdigest()
 
 
-img = Image.open('watermark.png').convert('RGBA')  # watermark
-img.putalpha(130)
-img.save('logoxImagens.png')
+# img = Image.open('logoxImagens.png').convert('RGBA')  # watermark
+# img.putalpha(130)
+# img.save('watermark.png')
 
-input_image_path = 'skeleton.jpg'  # image to apply watermark
+input_image_path = 'RGB.png'  # image to apply watermark
 watermark_image_path = 'watermark.png'  # watermark in png
 output_image_path = 'img_watermarked.png'  # image watermarked
 
@@ -79,7 +79,7 @@ def watermark(input_image_path, output_image_path, watermark_image_path):
 
 
     color = (255, 255, 255)
-    text = "TESTE DE TEXTO"
+    text = "Teste de texto"
     
 
     if text =="":
@@ -139,6 +139,7 @@ def main():
     ## print(imageDecrypted)
     #print(hash_id)
     ##TransformToImage(imageDecrypted)
+    print("DONE")
 
 
 main()
