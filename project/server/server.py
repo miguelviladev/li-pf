@@ -4,9 +4,11 @@ import string
 import base64
 import random
 import time
+import os
 from config import *
 from sqlcon import *
-import os
+from imgproc import *
+
 
 class Root(object):
 
@@ -311,10 +313,17 @@ class Cromos():
     def upload(self):
       body = cherrypy.request.json
       text_to_remove = body["image"][:body["image"].index(",")]
-      extension = text_to_remove[text_to_remove.index("/")+1:text_to_remove.index(";")]
-      encodedImage = body["image"].replace(text_to_remove, "")
-      with open(f"imageToSave.{extension}", "wb") as file:
-        file.write(base64.b64decode(encodedImage))
+      base64_image = body["image"].replace(text_to_remove, "")
+
+      image_name = body["name"]
+      image_collection = body["collection"]
+      image_extension = text_to_remove[text_to_remove.index("/")+1:text_to_remove.index(";")]
+      image_hash = hashImage(base64_image)
+
+
+
+
+      
       return {"status": "OK"}
 
 

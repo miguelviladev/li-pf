@@ -5,8 +5,6 @@ from Crypto.Hash import SHA256
 import os
 import io
 from Crypto.Util.Padding import pad, unpad
-from matplotlib.pyplot import draw
-
 
 # Transform image to bytes
 def TransformToBytes(data):
@@ -87,7 +85,6 @@ def watermark(input_image_path, output_image_path, watermark_image_path):
     # posicao da logo
     position2 = (int(width / 2 - watermark.size[0] / 2), int(height / 2 - watermark.size[1] / 2))
     transparent.paste(watermark, position2, mask=watermark)
-    transparent.show()
     transparent.save(output_image_path)
 
     color = (255, 255, 255)
@@ -115,23 +112,23 @@ def main():
 
     watermark(img, output_image_path, watermark_image_path)
 
-    img = Image.open(input_image_path)
-    width, height = img.size
-    print("Largura: %dpx" % width)
-    print("Altura: %dpx" % height)
-    print("Formato: %s" % img.format)
-    
-    
-    imgbytes = TransformToBytes(input_image_path)
-    imageEncrypted = encryptImage(imgbytes)
-    imageDecrypted = decryptImage(imageEncrypted)
-    hash_id = hashimage(imgbytes)
-    # print(imageEncrypted)
-    # print("\n")
-    # print("\n")
-    # print(imageDecrypted)
-    print(hash_id)
-    #TransformToImage(imageDecrypted)
+    #img = Image.open(input_image_path)
+    #width, height = img.size
+    #print("Largura: %dpx" % width)
+    #print("Altura: %dpx" % height)
+    #print("Formato: %s" % img.format)
+    #
+    #
+    #imgbytes = TransformToBytes(input_image_path)
+    #imageEncrypted = encryptImage(imgbytes)
+    #imageDecrypted = decryptImage(imageEncrypted)
+    #hash_id = hashimage(imgbytes)
+    ## print(imageEncrypted)
+    ## print("\n")
+    ## print("\n")
+    ## print(imageDecrypted)
+    #print(hash_id)
+    ##TransformToImage(imageDecrypted)
 
 
 main()

@@ -24,7 +24,6 @@ def initializeDatabase():
                     identifier INTEGER PRIMARY KEY AUTOINCREMENT,
                     collection INTEGER NOT NULL,
                     extension TEXT NOT NULL,
-                    path TEXT NOT NULL,
                     hash TEXT NOT NULL,
                     name TEXT NOT NULL,
                     history TEXT,
