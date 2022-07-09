@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="/collections" onclick="esconder()">Galeria</a>
+                    <a class="nav-link" href="/collections" onclick="esconder()">Coleções</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="/profile" onclick="esconder()">Perfil</a>
@@ -26,8 +26,8 @@
     <section class="row justify-content-center">
         <form class="upload-form" autocomplete="off">
             <label class="image-area mb-4" for="upload"><i class="fa-solid fa-upload fa-2xl"></i><input id="upload" type="file" accept="image/png, image/gif, image/jpeg" onchange="readURL(this);"/></label>
-            <input class="form-control py-2 border-right-0 border mb-4 shadow-none" placeholder="Nome da coleção" id="collectionname" />
             <input class="form-control py-2 border-right-0 border mb-4 shadow-none" type="text" id="imagename" placeholder="Nome da imagem"/>
+            <input class="form-control py-2 border-right-0 border mb-4 shadow-none" placeholder="Nome da coleção" id="collectionname" />
             <button id="upload-button" class="btn btn-primary btn-block mb-4">Carregar Imagem <i class="fa-solid fa-plus"></i></button>
         </form>
     </section>

@@ -19,12 +19,27 @@ function readURL(input) {
 const container = document.getElementsByTagName('main')[0];
 container.addEventListener('click', function (e) {
     if (e.target.id == 'upload-button') {
-        doUpload(e);
+        e.preventDefault();
+        if (validateName(document.getElementById('imagename').value) && validateName(document.getElementById('collectionname').value)) {
+            doUpload(e);
+        } else {
+            if (!validateName(document.getElementById('imagename').value)) {
+                document.getElementById('imagename').classList.add('is-invalid');
+            };
+            if (!validateName(document.getElementById('collectionname').value)) {
+                document.getElementById('collectionname').classList.add('is-invalid');
+            }
+        }
     };
+    if (e.target.id == 'imagename') {
+        document.getElementById('imagename').classList.remove('is-invalid');
+    }
+    if (e.target.id == 'collectionname') {
+        document.getElementById('collectionname').classList.remove('is-invalid');
+    }
 });
 
 async function doUpload(e) {
-    e.preventDefault();
     const reader = new FileReader();
     reader.readAsDataURL(image);
     const name = document.getElementById('imagename').value;
@@ -33,7 +48,6 @@ async function doUpload(e) {
     reader.addEventListener("load", async function(e) {
         const options = {
             method: 'POST',
-            //headers: {'Content-Type': 'text/html;charset=utf-8'},
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({"token": token, "name": name, "collection": collection, "image": e.target.result})
         };
@@ -45,3 +59,7 @@ async function doUpload(e) {
         }
     });
 };
+
+function validateName(name) {
+    return /^[A-Za-z0-9 -]*$/.test(name) && name.length > 0;
+  }
