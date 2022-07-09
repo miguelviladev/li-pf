@@ -56,7 +56,7 @@ img = Image.open('watermark.png').convert('RGBA')  # watermark
 img.putalpha(130)
 img.save('logoxImagens.png')
 
-input_image_path = 'sapce.jpg'  # image to apply watermark
+input_image_path = 'skeleton.jpg'  # image to apply watermark
 watermark_image_path = 'watermark.png'  # watermark in png
 output_image_path = 'img_watermarked.png'  # image watermarked
 
@@ -76,35 +76,45 @@ def watermark(input_image_path, output_image_path, watermark_image_path):
 
     transparent = Image.new('RGBA', (width, height), (0, 0, 0, 0))
     transparent.paste(base_image, (0, 0))
-    
-    # posicao da shape
-    position = (0, int(height / 2 - shape.size[1] / 4))
-    transparent.paste(shape, position, mask=shape)
-    transparent.save(output_image_path)
-    
-    # posicao da logo
-    position2 = (int(width / 2 - watermark.size[0] / 2), int(height / 2 - watermark.size[1] / 2))
-    transparent.paste(watermark, position2, mask=watermark)
-    transparent.save(output_image_path)
+
 
     color = (255, 255, 255)
-    text = "OWNER INFO"
+    text = "TESTE DE TEXTO"
     
-    fontsize = 1
-    img_fraction = 0.75
 
-    font = ImageFont.truetype("arial.ttf", fontsize)
-    while font.getsize(text)[0] < img_fraction*base_image.size[0] and font.getsize(text)[1] < watermark.height / 2:
-        fontsize += 1
-        font = ImageFont.truetype("arial.ttf", fontsize)
+    if text =="":
+        position = (0, int(height / 2 - shape.size[1] / 2))
+        position2 = (int(width/2 - watermark.size[0]/2), int(height/2 - watermark.size[1]/2))
         
-    fontsize -= 1
-    
-    draw = ImageDraw.Draw(transparent)
-    position = (int(width/2-font.getsize(text)[0]/2), int(height/2-font.getsize(text)[1]/2 + watermark.size[1]/2 + watermark.size[1] / 2))
-    
-    draw.text(position, text, fill=color, font=font)
-    transparent.save(output_image_path)
+        transparent.paste(shape, position, mask=shape)
+        transparent.save(output_image_path)
+        transparent.paste(watermark, position2, mask=watermark)
+        transparent.save(output_image_path)
+    else:
+        # posicao da shape
+        position = (0, int(height / 2 - shape.size[1] / 4))
+        # posicao da logo
+        position2 = (int(width / 2 - watermark.size[0] / 2), int(height / 2 - watermark.size[1] / 2))    
+        fontsize = 1
+        img_fraction = 0.75
+        
+        transparent.paste(shape, position, mask=shape)
+        transparent.save(output_image_path)
+        transparent.paste(watermark, position2, mask=watermark)
+        transparent.save(output_image_path)
+
+        font = ImageFont.truetype("arial.ttf", fontsize)
+        while font.getsize(text)[0] < img_fraction*base_image.size[0] and font.getsize(text)[1] < watermark.height / 2:
+            fontsize += 1
+            font = ImageFont.truetype("arial.ttf", fontsize)
+            
+        fontsize -= 1
+
+        draw = ImageDraw.Draw(transparent)
+        position = (int(width/2-font.getsize(text)[0]/2), int(height/2-font.getsize(text)[1]/2 + watermark.size[1]/2 + watermark.size[1] / 2))
+
+        draw.text(position, text, fill=color, font=font)
+        transparent.save(output_image_path)
 
 
 def main():

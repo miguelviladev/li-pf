@@ -1,0 +1,13 @@
+header {
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.card{
+  background-color: rgba(0,0,0,0);
+  border-radius: 2%;
+  border: white solid 1px;
+  
+}
