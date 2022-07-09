@@ -1,22 +1,38 @@
+import hashlib
 import base64
 import sys
 import os
 import io
 from PIL import Image, ImageFilter, ImageDraw, ImageFont
-from Crypto.Util.Padding import pad, unpad
 from Crypto.Hash import SHA256
+from Crypto.Cipher import AES
+from Crypto import Random
 from config import *
+
+pad   = lambda s: s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
+unpad = lambda s: s[:-ord(s[len(s) - 1:])]
+
+
+
+
+
+
 
 def hashImage(base64_img):
     hash = SHA256.new()
     hash.update(base64_img.encode('utf-8'))
     return hash.hexdigest()
 
-def encryptImage(content):
-    return AES.new(KEY, AES.MODE_ECB).encrypt(pad(content, BLOCKSIZE))
+def encryptImage(data):
+    iv = Random.new().read(AES.block_size)
+    cipher = AES.new(hashlib.sha256(KEY.encode("utf-8")).digest(), AES.MODE_CBC, iv)
+    return base64.b64encode(iv + cipher.encrypt(pad(data)))
 
-def decryptImage(content):
-    return unpad(AES.new(KEY, AES.MODE_ECB).decrypt(content), BLOCKSIZE)
+def decryptImage(data):
+    enc = base64.b64decode(data)
+    iv = enc[:16]
+    cipher = AES.new(hashlib.sha256(KEY.encode("utf-8")).digest(), AES.MODE_CBC, iv)
+    return unpad(cipher.decrypt(enc[16:]))
 
 def writeImage(content, filename):
     with open(filename, "wb") as file:

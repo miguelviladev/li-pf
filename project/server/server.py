@@ -319,18 +319,15 @@ class Cromos():
       image_extension = text_to_remove[text_to_remove.index("/")+1:text_to_remove.index(";")]
       image_hash = hashImage(base64_image)
 
-      temp_image_path = os.path.normpath(os.path.join(STORAGE,f"temp/{image_hash}.{image_extension}"))
-      water_image_path = os.path.normpath(os.path.join(STORAGE,f"watermarked/{image_hash}.{image_extension}"))
-
+      if selector("SELECT * FROM images WHERE hash = ?", (image_hash,)):
+            return {"status": "ERROR","message": "similar image already exists"}
+      temp_image_path = os.path.normpath(os.path.join(STORAGE,f"temporary/{image_hash}.{image_extension}"))
+      water_image_path = os.path.normpath(os.path.join(STORAGE,f"protected/{image_hash}.{image_extension}"))
+      original_image_path = os.path.normpath(os.path.join(STORAGE,f"original/{image_hash}.{image_extension}"))
       writeImage(base64_image, temp_image_path)
       writeWatermarkedImage(temp_image_path, water_image_path, WATERMARK)
-
-
-
-
-      
+      writeImage(encryptImage(base64_image), original_image_path)
       return {"status": "OK"}
-
 
 if __name__ == '__main__':
     cherrypy.config.update({'server.socket_port': 10005})
