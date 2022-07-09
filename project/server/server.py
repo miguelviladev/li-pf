@@ -304,6 +304,12 @@ class Cromos():
         images = selector("SELECT * FROM images WHERE collection = ?", (id,))
       return images if len(images) > 0 else {"status": "ERROR", "message": "No images found"}
 
+    @cherrypy.expose
+    @cherrypy.tools.json_out()
+    def upload(self):
+      print(cherrypy.request.body.read())
+      return {"status": "OK"}
+
 
 if __name__ == '__main__':
     cherrypy.config.update({'server.socket_port': 10005})

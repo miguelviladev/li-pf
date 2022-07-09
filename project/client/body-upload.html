@@ -25,10 +25,10 @@
     <h1 class="title1-light mb-4">Carrega uma Imagem</h1>
     <section class="row justify-content-center">
         <form class="upload-form" autocomplete="off">
-            <label class="image-area mb-4" for="upload"><i class="fa-solid fa-upload fa-2xl"></i><input id="upload" type="file" onchange="readURL(this);"/></label>
-            <input class="form-control py-2 border-right-0 border mb-4 shadow-none" placeholder="Nome da coleção" id="CollectionName" />
-            <input class="form-control py-2 border-right-0 border mb-4 shadow-none" type="text" id="ImageName" placeholder="Nome da imagem"/>
-            <button id="upload-button" type="button" class="btn btn-primary btn-block mb-4">Carregar Imagem <i class="fa-solid fa-plus"></i></button>
+            <label class="image-area mb-4" for="upload"><i class="fa-solid fa-upload fa-2xl"></i><input id="upload" type="file" accept="image/png, image/gif, image/jpeg" onchange="readURL(this);"/></label>
+            <input class="form-control py-2 border-right-0 border mb-4 shadow-none" placeholder="Nome da coleção" id="collectionname" />
+            <input class="form-control py-2 border-right-0 border mb-4 shadow-none" type="text" id="imagename" placeholder="Nome da imagem"/>
+            <button id="upload-button" class="btn btn-primary btn-block mb-4">Carregar Imagem <i class="fa-solid fa-plus"></i></button>
         </form>
     </section>
 </div>
