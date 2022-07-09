@@ -117,3 +117,8 @@ img {
 .space-navbar {
   margin-top: 80px;
 }
+
+.modal-content {
+  background-color: #ffffff;
+  color: #000;
+}

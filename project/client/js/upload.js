@@ -55,7 +55,8 @@ async function doUpload(e) {
         if (response.status == 'OK') {
             window.location.href = '/upload';
         } else  {
-            alert('Error al subir el cromo');
+            $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false})  
+            $('#exampleModalCenter').modal('show'); 
         }
     });
 };
