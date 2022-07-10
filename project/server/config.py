@@ -22,6 +22,9 @@ SCRIPT_UPLOAD = os.path.normpath(os.path.join(SERVER, '../client/script-upload.h
 COLLECTIONS_PAGE_BODY= os.path.normpath(os.path.join(SERVER, '../client/body-collections.html'))
 SCRIPT_COLLECTIONS = os.path.normpath(os.path.join(SERVER, '../client/script-collections.html'))
 
+COLLECTION_PAGE_BODY= os.path.normpath(os.path.join(SERVER, '../client/body-collection.html'))
+SCRIPT_COLLECTION = os.path.normpath(os.path.join(SERVER, '../client/script-collection.html'))
+
 ABOUT_PAGE= os.path.normpath(os.path.join(SERVER, '../client/about.html'))
 PROFILE_PAGE= os.path.normpath(os.path.join(SERVER, '../client/profile.html'))
 

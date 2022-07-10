@@ -24,7 +24,7 @@ class Root(object):
 		if id == None:
 			return open(SCRIPT_COLLECTIONS).read()
 		else:
-			return "dsasa"
+			return open(SCRIPT_COLLECTION).read()
 		
 	@cherrypy.expose
 	def about(self):
