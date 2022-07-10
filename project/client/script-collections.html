@@ -38,7 +38,6 @@
                         for (id in response.body) {
                             const responseCollection = await (await fetch(`/api/cromos/${response.body[id][2]}`)).json();
                             const firstImage = responseCollection[0][0];
-
                             elements += `
                             <div class="col-md-4 mb-4">
                                 <a href="./collections/${response.body[id][0]}" class="acard">
@@ -46,13 +45,12 @@
                                         <img class="card-img-top" src="./img/RGB.png" alt="imagem da coleção 1">
                                         <div class="card-body">
                                             <h5 class="card-title subtitle-card">${response.body[id][2]}</h5>
-                                            <p class="card-text card-title paragraph-card">${response.body[id][1]}</p>
+                                            <p class="card-text card-title paragraph-card">criado por ${response.body[id][1]}</p>
                                         </div>
                                     </div>
                                 </a>
                             </div>`;
                         }
-
                         elements += '</div>';
                     } else {
                         elements = '<p class="paragraph-light">Não existem coleções</p>';

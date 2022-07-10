@@ -32,8 +32,9 @@
 
 .paragraph-card {
     color: #ffffff;
-    text-align: start;
-    font-size: 90%;
+    text-align: center;
+    font-size: 75%;
+    font-weight: 400;
 }
 
 .text-muted {
