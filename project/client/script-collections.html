@@ -36,7 +36,9 @@
                     elements = '<div class="row">';
                     if (response.message == 'Got collections') {
                         for (id in response.body) {
-                            const responseCollection = await (await fetch(`/api/cromos/${response.body[id][0]}`)).json();
+                            const responseCollection = await (await fetch(`/api/cromos/${response.body[id][2]}`)).json();
+                            const firstImage = responseCollection[0][0];
+
                             elements += `
                             <div class="col-md-4 mb-4">
                                 <a href="./collections/${response.body[id][0]}" class="acard">

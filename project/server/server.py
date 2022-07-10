@@ -4,6 +4,9 @@ import string
 import random
 import time
 import os
+import io
+
+from cherrypy.lib import file_generator
 from config import *
 from sqlcon import *
 from imgproc import *
@@ -174,6 +177,8 @@ class Users():
 
 @cherrypy.popargs("id")
 class Cromos():
+		def __init__(self):
+			self.image = CromosImg()
 
 		@cherrypy.expose
 		@cherrypy.tools.json_out()
@@ -232,6 +237,26 @@ class Cromos():
 			os.remove(temp_image_path)
 
 			return {"status": "OK"}
+
+class CromosImg(object):
+		@cherrypy.expose
+		def index(self, id):
+			cherrypy.response.headers['Content-Type'] = "image/png"
+
+			image_data = selector("SELECT * FROM images WHERE identifier = ?", (id,))
+
+			if len(image_data) == 0:
+				return {"status": "ERROR", "message": "Image not found"}
+
+			image_path = os.path.normpath(os.path.join(STORAGE,f"protected/{image_data[0][3]}.{image_data[0][2]}"))
+
+			with open(image_path, "rb") as image:
+				image_bytes = image.read()
+
+			image_buffer = io.BytesIO(image_bytes)
+			image_buffer.seek(0)
+
+			return file_generator(image_buffer)
 
 if __name__ == '__main__':
 		cherrypy.config.update({'server.socket_port': 10005})
