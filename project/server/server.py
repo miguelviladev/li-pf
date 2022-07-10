@@ -195,79 +195,79 @@ class Users():
 
 @cherrypy.popargs("id")
 class Cromos():
-		def __init__(self):
-			self.image = ImgEndpoint()
+	def __init__(self):
+		self.image = ImgEndpoint()
 
-		@cherrypy.expose
-		@cherrypy.tools.json_in()
-		@cherrypy.tools.json_out()
-		def index(self, id = None):
-			if id == None:
-				images = selector("SELECT * FROM images", ())
-			else:
-				print(id)
-				collection_name = selector("SELECT name FROM collections WHERE identifier = ?", (id,))
-				images = selector("SELECT * FROM images WHERE collection = ?", (collection_name[0][0],))
-			return images if len(images) > 0 else {"status": "ERROR", "message": "No images found"}
+	@cherrypy.expose
+	@cherrypy.tools.json_in()
+	@cherrypy.tools.json_out()
+	def index(self, id = None):
+		if id == None:
+			images = selector("SELECT * FROM images", ())
+		else:
+			print(id)
+			collection_name = selector("SELECT name FROM collections WHERE identifier = ?", (id,))
+			images = selector("SELECT * FROM images WHERE collection = ?", (collection_name[0][0],))
+		return images if len(images) > 0 else {"status": "ERROR", "message": "No images found"}
 
-		@cherrypy.expose
-		@cherrypy.tools.json_in()
-		@cherrypy.tools.json_out()
-		def data(self, id = None):
-			if id == None:
-				return {"status": "ERROR", "message": "No image specified"}
-			else:
-				images = selector("SELECT * FROM images WHERE identifier = ?", (id,))
-			return images if len(images) > 0 else {"status": "ERROR", "message": "No image found"}
+	@cherrypy.expose
+	@cherrypy.tools.json_in()
+	@cherrypy.tools.json_out()
+	def data(self, id = None):
+		if id == None:
+			return {"status": "ERROR", "message": "No image specified"}
+		else:
+			images = selector("SELECT * FROM images WHERE identifier = ?", (id,))
+		return images if len(images) > 0 else {"status": "ERROR", "message": "No image found"}
 
-		@cherrypy.expose
-		@cherrypy.tools.json_in()
-		@cherrypy.tools.json_out()
-		def collections(self):
-			body = cherrypy.request.json
-			expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body["token"],))
-			if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
-				return {'status': 'ERROR'}
-			else:
-				collections = selector("SELECT * FROM collections", ())
-				return {"status": "OK", "message": "Got collections", "body": collections} if len(collections) > 0 else {"status": "OK", "message": "No collections found"}
+	@cherrypy.expose
+	@cherrypy.tools.json_in()
+	@cherrypy.tools.json_out()
+	def collections(self):
+		body = cherrypy.request.json
+		expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body["token"],))
+		if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
+			return {'status': 'ERROR'}
+		else:
+			collections = selector("SELECT * FROM collections", ())
+			return {"status": "OK", "message": "Got collections", "body": collections} if len(collections) > 0 else {"status": "OK", "message": "No collections found"}
 
-		@cherrypy.expose
-		@cherrypy.tools.json_in()
-		@cherrypy.tools.json_out()
-		def upload(self):
-			body = cherrypy.request.json
-			text_to_remove = body["image"][:body["image"].index(",")]
-			base64_image = body["image"].replace(text_to_remove, "")
+	@cherrypy.expose
+	@cherrypy.tools.json_in()
+	@cherrypy.tools.json_out()
+	def upload(self):
+		body = cherrypy.request.json
+		text_to_remove = body["image"][:body["image"].index(",")]
+		base64_image = body["image"].replace(text_to_remove, "")
 
-			image_name = body["name"].capitalize()
-			image_collection = body["collection"].title()
-			image_extension = "png"
-			image_hash = hashImage(base64_image)
-			if selector("SELECT * FROM images WHERE hash = ?", (image_hash,)):
-				return {"status": "ERROR","message": "similar image already exists"}
+		image_name = body["name"].capitalize()
+		image_collection = body["collection"].title()
+		image_extension = "png"
+		image_hash = hashImage(base64_image)
+		if selector("SELECT * FROM images WHERE hash = ?", (image_hash,)):
+			return {"status": "ERROR","message": "similar image already exists"}
 
-			os.makedirs(os.path.normpath(os.path.join(STORAGE,"temporary/")), exist_ok=True)
-			os.makedirs(os.path.normpath(os.path.join(STORAGE,"protected/")), exist_ok=True)
-			os.makedirs(os.path.normpath(os.path.join(STORAGE,"original/")), exist_ok=True)
+		os.makedirs(os.path.normpath(os.path.join(STORAGE,"temporary/")), exist_ok=True)
+		os.makedirs(os.path.normpath(os.path.join(STORAGE,"protected/")), exist_ok=True)
+		os.makedirs(os.path.normpath(os.path.join(STORAGE,"original/")), exist_ok=True)
 
-			temp_image_path = os.path.normpath(os.path.join(STORAGE,f"temporary/{image_hash}.{image_extension}"))
-			water_image_path = os.path.normpath(os.path.join(STORAGE,f"protected/{image_hash}.{image_extension}"))
-			original_image_path = os.path.normpath(os.path.join(STORAGE,f"original/{image_hash}.{image_extension}"))
+		temp_image_path = os.path.normpath(os.path.join(STORAGE,f"temporary/{image_hash}.{image_extension}"))
+		water_image_path = os.path.normpath(os.path.join(STORAGE,f"protected/{image_hash}.{image_extension}"))
+		original_image_path = os.path.normpath(os.path.join(STORAGE,f"original/{image_hash}.{image_extension}"))
 
-			writeImage(base64_image, temp_image_path)
-			writeWatermarkedImage(temp_image_path, water_image_path, WATERMARK)
-			writeImage(encryptImage(base64_image), original_image_path)
+		writeImage(base64_image, temp_image_path)
+		writeWatermarkedImage(temp_image_path, water_image_path, WATERMARK)
+		writeImage(encryptImage(base64_image), original_image_path)
 
-			executor("INSERT INTO images (name, collection, hash, extension) VALUES (?, ?, ?, ?)",(image_name, image_collection, image_hash, image_extension))
+		executor("INSERT INTO images (name, collection, hash, extension) VALUES (?, ?, ?, ?)",(image_name, image_collection, image_hash, image_extension))
 
-			if not selector("SELECT * FROM collections WHERE name = ?", (image_collection,)):
-				owner = selector("SELECT username FROM tokens WHERE token = ?", (body["token"],))[0][0]
-				executor("INSERT INTO collections (name, owner) VALUES (?, ?)",(image_collection, owner,))
+		if not selector("SELECT * FROM collections WHERE name = ?", (image_collection,)):
+			owner = selector("SELECT username FROM tokens WHERE token = ?", (body["token"],))[0][0]
+			executor("INSERT INTO collections (name, owner) VALUES (?, ?)",(image_collection, owner,))
 
-			os.remove(temp_image_path)
+		os.remove(temp_image_path)
 
-			return {"status": "OK"}
+		return {"status": "OK"}
 
 class ImgEndpoint(object):
 	@cherrypy.expose
