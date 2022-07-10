@@ -29,7 +29,9 @@ IMAGE_PAGE_BODY= os.path.normpath(os.path.join(SERVER, '../client/body-image.htm
 SCRIPT_IMAGE = os.path.normpath(os.path.join(SERVER, '../client/script-image.html'))
 
 ABOUT_PAGE= os.path.normpath(os.path.join(SERVER, '../client/about.html'))
-PROFILE_PAGE= os.path.normpath(os.path.join(SERVER, '../client/profile.html'))
+
+PROFILE_PAGE_BODY= os.path.normpath(os.path.join(SERVER, '../client/body-profile.html'))
+SCRIPT_PROFILE = os.path.normpath(os.path.join(SERVER, '../client/script-profile.html'))
 
 
 SERVER_CONFIG = {

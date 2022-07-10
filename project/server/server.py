@@ -26,7 +26,7 @@ class Root(object):
 		
 	@cherrypy.expose
 	def profile(self):
-		return open(PROFILE_PAGE).read()
+		return open(SCRIPT_PROFILE).read()
 		
 	@cherrypy.expose
 	def upload(self):
@@ -138,6 +138,17 @@ class Pages():
 	@cherrypy.expose
 	@cherrypy.tools.json_in()
 	@cherrypy.tools.json_out()
+	def profile(self):
+		body = cherrypy.request.json
+		expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body['token'],))
+		if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
+			return {"status": "FORBIDDEN", "body": ""}
+		else:
+			return {"status": "OK", "body": open(PROFILE_PAGE_BODY).read()}
+
+	@cherrypy.expose
+	@cherrypy.tools.json_in()
+	@cherrypy.tools.json_out()
 	def image(self):
 		body = cherrypy.request.json
 		image_owner = selector("SELECT owner FROM images WHERE identifier = ?", (body['img_id'],))
@@ -212,9 +223,19 @@ class Cromos():
 		if id == None:
 			images = selector("SELECT * FROM images", ())
 		else:
-			print(id)
 			collection_name = selector("SELECT name FROM collections WHERE identifier = ?", (id,))
 			images = selector("SELECT * FROM images WHERE collection = ?", (collection_name[0][0],))
+		return images if len(images) > 0 else {"status": "ERROR", "message": "No images found"}
+
+	@cherrypy.expose
+	@cherrypy.tools.json_in()
+	@cherrypy.tools.json_out()
+	def profile(self, id = None):
+		if id == None:
+			images = selector("SELECT * FROM images", ())
+		else:
+			username = selector("SELECT username FROM tokens WHERE token = ?", (id,))
+			images = selector("SELECT * FROM images WHERE owner = ?", (username[0][0],))
 		return images if len(images) > 0 else {"status": "ERROR", "message": "No images found"}
 
 	@cherrypy.expose
