@@ -252,7 +252,10 @@ class Cromos():
 			return {"status": "ERROR"}
 		else:
 			if body["username"] != "":
-				username = body["username"]
+				if body["username"].rstrip() == "" or selector("SELECT * FROM users WHERE username = ?", (body["username"],)):
+					username = body["username"]
+				else:
+					return {"status": "ERROR"}
 			executor("UPDATE images SET owner = ? WHERE identifier = ?", (username, imgid,))
 			prev_hist_db = selector("SELECT history FROM images WHERE identifier = ?", (imgid,))[0][0]
 			prev_hist = json.loads(prev_hist_db) if prev_hist_db != None else json.loads('[]')
