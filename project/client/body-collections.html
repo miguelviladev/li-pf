@@ -18,7 +18,7 @@
           <a class="nav-link" href="/profile" onclick="esconder()">Perfil</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" onclick="esconder()">Sair</a>
+          <a class="nav-link" onclick="window.localStorage.removeItem('token');window.location.href = '/';">Sair</a>
         </li>
       </ul>
     </div>
