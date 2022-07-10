@@ -128,3 +128,10 @@ img {
   background: #d32f2f;
   color: #fff;
 }
+
+
+footer{
+  position:absolute;
+  bottom:0;
+  width:100%;
+}
