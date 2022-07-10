@@ -113,16 +113,27 @@
 \begin{abstract}
 
 Neste trabalho foi-nos solicitado a realização de um site online com a finalidade de os seus utilizadores poderem armazenar e trocar as suas imagens de forma rápida e intuitiva. 
+
 Além de poderem ser armazenadas imagens pré-existentes, os utilizadores poderão tambem publicar no site as suas próprias criacões, formando uma coleção visivel a qualquer utilizador, e disponivel para ser requisitada por qualquer um que esteja registado no site.
 Todas as imagens colocadas no site serão sujeitas a uma marca de agua gerada automaticamente, como tambem o logo do mesmo com o objetivo de garantir a autenticidade das mesmas.
+
 Comforme o anteriormente exposto, ao ser adicionada uma imagem pelo utilizador o seu nome estará associado há imagem e visível no site, impossibilitando assim o plágio de imagens.
+
 Em relação às trocas entre diversos utilizadores, foi desenvolvido um sistema de encriptação de forma a garantir a segurança das imagens, para que as imagens possam ser trocadas e não roubas. Assim estas trocas, para além de seguras, são tambem instântanias e simples, tendo apenas o utilizador que aceder à sua coleção, escolher a imagem e por fim digitar o seu destinatário.
+
 \end{abstract}
 
 \section{Capítulo 2}
 \section{Interface Web}
-Esta componente é responsável: pelo registo  de novos utilizadores e pelo login, após o login ser efetuado com sucesso o utilizador terá acesso a uma lista de coleções de imagens com a opção de criar uma nova coleção. Caso o utilizador opte por criar um coleção nova, o utilizador deverá enviar as imagens que pretender para o servidor, tendo que enviar uma imagem de cada vez. Por outro lado, se o pretendido for aceder a uma coleção terá duas opções: visualizar todasa as imagens da mesma coleção que tenham um proprietário, ou então pode enviar uma imagem do qual seja proprietário para outro utilizador à escolha. 
-Acrescenta-se ainda que, esta componente é responsável pelos desenvolvedores do projeto e do repositório.
+Esta componente é a responsável pelo registo de novos utilizadores e pelo login dos mesmos. Após o registo no nosso site com um nome de utilizador, será gerada automaticamente uma palavra-passe para cada utilizador utilizar no seu login e ter acesso ao site pela sua conta.
+
+Ao logar-se com a sua conta, o utilizador terá acesso a uma lista de coleções de imagens, colocadas no site por outros usuários, e disponiveis para serem requisitadas por qualquer utilizador que as queira adicionar a sua coleção. 
+
+O utilizador terá também acesso à pagina do seu perfil pessoal, onde estarão lá colocadas todas as imagens que pertencem à sua coleção pessoal. Nesta mesma pagina será possivel enviar as suas imagens a outros usuários do site, apenas digitando o seu nome de utilizador na imagem que quer enviar. 
+
+Além de armazenar as suas coleções requisitadas, o utilizador também poderá ter acesso a página "Carregar" onde poderá, de maneira intuitiva, colocar as suas proprias criações no site, de modo a serem partilhadas com todos os outros usuários do mesmo. Estas imagens adicionadas poderão ser requisitadas pelos outros utilizadores como qualquer outra imagem que pertença ao site.
+
+Por fim podem observar na nossa Navbar, na pagina inicial possui uma aba "Sobre", onde pode encontrar um resumo do objetivo do site e também os participantes com os seus respetivos contactos. 
 
 \section{Capítulo 3}
 \section{Aplicação Web}
