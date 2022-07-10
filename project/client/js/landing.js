@@ -6,12 +6,12 @@ document.addEventListener('DOMContentLoaded', async function() {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({"token": localStorage.getItem('token')})
     };
-    const response = await (await fetch('/api/users/valid', options)).json();
+    const response = await (await fetch('./api/users/valid', options)).json();
     if (response.authentication == 'ERROR') {
-        a_button_action.setAttribute('href', '/signin');
+        a_button_action.setAttribute('href', './signin');
         button_action.innerHTML = 'Autenticação <i class="fa-solid fa-key"></i>';
     } else  {
-        a_button_action.setAttribute('href', '/collections');
+        a_button_action.setAttribute('href', './collections');
         button_action.innerHTML = 'Ver Coleções <i class="fa-solid fa-images"></i>';
     };
  }, false);
