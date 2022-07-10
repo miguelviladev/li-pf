@@ -25,6 +25,9 @@ SCRIPT_COLLECTIONS = os.path.normpath(os.path.join(SERVER, '../client/script-col
 COLLECTION_PAGE_BODY= os.path.normpath(os.path.join(SERVER, '../client/body-collection.html'))
 SCRIPT_COLLECTION = os.path.normpath(os.path.join(SERVER, '../client/script-collection.html'))
 
+IMAGE_PAGE_BODY= os.path.normpath(os.path.join(SERVER, '../client/body-image.html'))
+SCRIPT_IMAGE = os.path.normpath(os.path.join(SERVER, '../client/script-image.html'))
+
 ABOUT_PAGE= os.path.normpath(os.path.join(SERVER, '../client/about.html'))
 PROFILE_PAGE= os.path.normpath(os.path.join(SERVER, '../client/profile.html'))
 
