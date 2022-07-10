@@ -3,6 +3,7 @@ import secrets
 import string
 import random
 import time
+import json
 import os
 import io
 
@@ -139,12 +140,20 @@ class Pages():
 	@cherrypy.tools.json_out()
 	def image(self):
 		body = cherrypy.request.json
+		image_owner = selector("SELECT owner FROM images WHERE identifier = ?", (body['img_id'],))
 		data = selector("SELECT expiry, username FROM tokens WHERE token = ?", (body['token'],))
-		print(data)
-		if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
+		expiration = data[0][0]
+		username = data[0][1]
+		if body["token"] == None or len(data) == 0 or expiration < int(time.time()):
 			return {"status": "FORBIDDEN", "body": ""}
 		else:
-			return {"status": "OK", "body": open(COLLECTION_PAGE_BODY).read()}
+			if image_owner[0][0] == username:
+				return {"status": "OK", "type": "owner", "body": open(COLLECTION_PAGE_BODY).read()}
+			elif image_owner[0][0] == None:
+				return {"status": "OK", "type": "free", "body": open(COLLECTION_PAGE_BODY).read()}
+			else:
+				return {"status": "OK", "type": "viewer", "body": open(COLLECTION_PAGE_BODY).read()}
+
 class Users():
 	@cherrypy.expose
 	def index(self):
@@ -191,8 +200,6 @@ class Users():
 			executor("INSERT INTO users (username, password, owimages) VALUES (?, ?, '')",(body["username"], password))
 			return {"creation": "OK", "password": "{}".format(password)}
 
-
-
 @cherrypy.popargs("id")
 class Cromos():
 	def __init__(self):
@@ -235,6 +242,27 @@ class Cromos():
 	@cherrypy.expose
 	@cherrypy.tools.json_in()
 	@cherrypy.tools.json_out()
+	def claim(self):
+		body = cherrypy.request.json
+		data = selector("SELECT expiry, username FROM tokens WHERE token = ?", (body['token'],))
+		imgid = body['id']
+		expiration = data[0][0]
+		username = data[0][1]
+		if body["token"] == None or len(data) == 0 or expiration < int(time.time()):
+			return {"status": "ERROR"}
+		else:
+			if body["username"] != "":
+				username = body["username"]
+			executor("UPDATE images SET owner = ? WHERE identifier = ?", (username, imgid,))
+			prev_hist_db = selector("SELECT history FROM images WHERE identifier = ?", (imgid,))[0][0]
+			prev_hist = json.loads(prev_hist_db) if prev_hist_db != None else json.loads('[]')
+			prev_hist.append({"ts": int(time.time()), "action": "claim", "username": username})
+			executor("UPDATE images SET history = ? WHERE identifier = ?", (json.dumps(prev_hist), imgid,))
+			return {"status": "OK"}
+
+	@cherrypy.expose
+	@cherrypy.tools.json_in()
+	@cherrypy.tools.json_out()
 	def upload(self):
 		body = cherrypy.request.json
 		text_to_remove = body["image"][:body["image"].index(",")]
@@ -259,10 +287,12 @@ class Cromos():
 		writeWatermarkedImage(temp_image_path, water_image_path, WATERMARK)
 		writeImage(encryptImage(base64_image), original_image_path)
 
-		executor("INSERT INTO images (name, collection, hash, extension) VALUES (?, ?, ?, ?)",(image_name, image_collection, image_hash, image_extension))
+		owner = selector("SELECT username FROM tokens WHERE token = ?", (body["token"],))[0][0]
+		hist = json.loads('[]')
+		hist.append({"ts": int(time.time()), "action": "upload", "username": owner})
+		executor("INSERT INTO images (name, collection, hash, extension, history) VALUES (?, ?, ?, ?, ?)",(image_name, image_collection, image_hash, image_extension, json.dumps(hist)))
 
 		if not selector("SELECT * FROM collections WHERE name = ?", (image_collection,)):
-			owner = selector("SELECT username FROM tokens WHERE token = ?", (body["token"],))[0][0]
 			executor("INSERT INTO collections (name, owner) VALUES (?, ?)",(image_collection, owner,))
 
 		os.remove(temp_image_path)
