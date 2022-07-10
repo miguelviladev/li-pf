@@ -137,20 +137,22 @@ Por fim podem observar na nossa Navbar, na pagina inicial possui uma aba "Sobre"
 
 \section{Capítulo 3}
 \section{Aplicação Web}
-Relativamente há aplicação web foi desenvolvida com a finalidade de ser minimalista e intuitiva, com o objetivo de ser clara. Deste modo. o pogramda que sustenta este design consiste num programa em python que serve conteúdos estáticos nomeadamente, html, css e js o que perimite a navegação entre diversos componentes. Foi ainda desenvolvido, uma interface programática, que responde sempre com o objetos JSON, que permite obter/inserir informação sobre as imagens, autores e comentários realizados.
+No nosso site a aplicação web foi desenvolvida com o intuito de tornar o site o mais apelativo, minimalista e intuitivo ao utilizador de modo a não surgirem muitas duvidas na sua utilização, o que poderia levar ao desuso do mesmo. Deste modo. o pogramda que sustenta este design consiste num programa em python que serve conteúdos estáticos nomeadamente, html, css e js o que perimite a navegação entre diversos componentes. Foi ainda desenvolvido, uma interface programática, que responde sempre com o objetos JSON, que permite obter/inserir informação sobre as imagens, autores e comentários realizados.
 
 \section{Capítulo 4}
 \section{Persistência}
 
 \section{Capítulo 5}
 \section{Processador de imagens}
-Esta componente é executada como complementar da aplicação web,	e tem como principal função obter e armazenar uma imagem enviada pelo utilizador, de seguida trata a mesma aplicando uma marca de água gerada pelo servidor
+Esta componente é executada como complementar à componente da aplicação web, e tem como principal função formatar e armazenar uma imagem que seja enviada pelo utilizador na aba de "Carregar" presente na NavBar.
 
-\section{Capítulo 4}
-\section{Persistência}
+O servidor irá reecber a imagem, reconhecer o seu conteúdo e tamanho e através duma implementação feita, irá aplicar uma marca de água na imagem com o intuito de a tornar autentica. Esta marca de água irá conter o logo do nosso site de modo a que a imagem continue a ser preceptivel para os utilizadores.
+Esta marca de água além de informar que a imagem é verificada pelo nosso site, também irá indicar o dono da mesma, pois logo após a requisição duma imagem, será também aplicada na marca de água o nome de utilizador do dono da imagem.
+
+Todas estas implementações ajudam na segurança do site, para não haver burlas nem roubos de imagens.
 
 
-\section{Capítulo 5}
+\section{Capítulo 6}
 \section{Contribuições dos autores}
 Durante este trabalho foi notório o esforço e dedicação de todos os participantes para um melhor resultado final. Várias horas de trabalho de grupo foram dispendidas para concluir o trabalho dentro dos prazos e com tudo funcional da melhor maneira possivel, ou seja, um site intuitivo, aparencia apelativa e totalmente funcional.
 
