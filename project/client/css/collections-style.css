@@ -54,8 +54,9 @@
 .acard {
     display: inline-block;
     transition: all 0.2s ease;
+    height: 100%;
 }
 
 .acard:hover {
-    scale: 1.05;
+    scale: 1.04;
 }
