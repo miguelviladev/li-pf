@@ -124,6 +124,17 @@ class Pages():
 			else:
 				return {"status": "OK", "body": open(COLLECTIONS_PAGE_BODY).read()}
 
+		@cherrypy.expose
+		@cherrypy.tools.json_in()
+		@cherrypy.tools.json_out()
+		def collection(self):
+			body = cherrypy.request.json
+			expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body['token'],))
+			if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
+				return {"status": "FORBIDDEN", "body": ""}
+			else:
+				return {"status": "OK", "body": open(COLLECTION_PAGE_BODY).read()}
+
 
 
 class Users():
@@ -181,12 +192,15 @@ class Cromos():
 			self.image = CromosImg()
 
 		@cherrypy.expose
+		@cherrypy.tools.json_in()
 		@cherrypy.tools.json_out()
 		def index(self, id = None):
 			if id == None:
 				images = selector("SELECT * FROM images", ())
 			else:
-				images = selector("SELECT * FROM images WHERE collection = ?", (id,))
+				print(id)
+				collection_name = selector("SELECT name FROM collections WHERE identifier = ?", (id,))
+				images = selector("SELECT * FROM images WHERE collection = ?", (collection_name[0][0],))
 			return images if len(images) > 0 else {"status": "ERROR", "message": "No images found"}
 
 		@cherrypy.expose
@@ -233,6 +247,9 @@ class Cromos():
 			if not selector("SELECT * FROM collections WHERE name = ?", (image_collection,)):
 						owner = selector("SELECT username FROM tokens WHERE token = ?", (body["token"],))[0][0]
 						executor("INSERT INTO collections (name, owner) VALUES (?, ?)",(image_collection, owner,))
+
+			os.remove(temp_image_path)
+
 			return {"status": "OK"}
 
 class CromosImg(object):
