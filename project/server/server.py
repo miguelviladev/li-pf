@@ -228,6 +228,9 @@ class Cromos():
 			if not selector("SELECT * FROM collections WHERE name = ?", (image_collection,)):
 						owner = selector("SELECT username FROM tokens WHERE token = ?", (body["token"],))[0][0]
 						executor("INSERT INTO collections (name, owner) VALUES (?, ?)",(image_collection, owner,))
+
+			os.remove(temp_image_path)
+
 			return {"status": "OK"}
 
 if __name__ == '__main__':
