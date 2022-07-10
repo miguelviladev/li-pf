@@ -57,10 +57,13 @@
             <div class="section-space">
                 <div class="col wrapper">
                     <div class="image-label">
-                        <div class="image-container">
+                        <div class="image-container mb-4">
                             <!-- SO PARA TESTE -->
-                            <img src="./img/logo-deti.jpg" alt="imagem" />
+                            <img id= "img-shadow" src="./img/logo-deti.jpg" alt="imagem" />
                         </div>
+                        <button id="request-button" type="button" class="btn btn-primary btn-block mb-4">
+                            Requisitar Imagem <i id="request-icon" class="fa-solid fa-download"></i>
+                        </button>
                     </div>
                     <div class="image-label-text">
                         <h2 class="subtitle-light">Coleção #</h2>
@@ -70,13 +73,21 @@
                         <p class="paragraph-light">Histórico de Transações: #####</p>
                         <p class="paragraph-light">Tamanho da imagem: WIDTHxHEIGHT</p>
                         <br />
-                        <div class="row justify-content-center">
+                        <div class="row justify content-center mb-4">
+                            <p class="paragraph-light">
+                                Comentários:
+                            </p>
+                            <p class="paragraph-light">
+                                XXXXXXXXX
+                            </p>
+                        </div>
+                        <div id="hasOwner"class="row justify-content-center">
                             <form class="account-form" autocomplete="off">
                                 <h1 class="paragraph-light">Transferir propriedade da imagem para outro usuário</h1>
 
                                 <input class="form-control py-2 border-right-0 border mb-4 shadow-none" type="text" placeholder="Utilizador" id="username" />
                                 <button id="transfer-button" type="button" class="btn btn-primary btn-block mb-4">
-                                    Transferir <i id="login-icon" class="fa-solid fa-upload"></i>
+                                    Transferir <i id="transfer-icon" class="fa-solid fa-upload"></i>
                                 </button>
                             </form>
                         </div>
