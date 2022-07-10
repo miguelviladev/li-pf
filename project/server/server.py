@@ -264,6 +264,8 @@ class CromosImg(object):
 
 			image_path = os.path.normpath(os.path.join(STORAGE,f"protected/{image_data[0][3]}.{image_data[0][2]}"))
 
+			print(image_path)
+
 			with open(image_path, "rb") as image:
 				image_bytes = image.read()
 
