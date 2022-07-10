@@ -20,6 +20,13 @@
     <link rel="icon" type="image/x-icon" href="./img/favicon.png">
     <title>Caderneta Digital</title>
 </head>
+<script>
+    // Necessário para execução no xcoa, por causa de href relativos
+    const url = window.location.href;
+    if (url.endsWith("labiproj3")) {
+        window.location.href = window.location.href +  "/";
+    }
+</script>
 
 <body data-bs-spy="scroll" data-bs-offset="200" data-bs-target=".navbar">
     <!-- Barra de Navegação -->
