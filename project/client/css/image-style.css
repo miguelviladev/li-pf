@@ -11,6 +11,9 @@
 
 .history-section {
     flex: 1 1 auto;
+    overflow-y: scroll;
+    height: 200px;
+    padding: 0px
 }
 
 .year-container {
@@ -98,4 +101,12 @@
     width: 100%;
     height: 42px;
     padding-top: 8px;
+}
+
+.paragraph {
+    font-size: 70%;
+    font-weight: 400;
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
 }

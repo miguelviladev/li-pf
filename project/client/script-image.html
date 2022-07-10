@@ -25,7 +25,6 @@
         <script>
             async function getImage(pagetype, bodyhtml) {
                 const response = await (await fetch(`/api/cromos/data/` + window.location.href.substring(window.location.href.lastIndexOf('/') + 1))).json();
-                console.log(response);
 
                 owned_image_form = `
                 <div class="input-group justify-content-center">
@@ -42,6 +41,13 @@
                     <input disabled class="form-control py-2 border-right-0 border shadow-none" type="text" placeholder="Utilizador" id="utilizador">
                     <span id="copyButton" class="input-group-addon btn disabled" title="Clica para copiar"><i id="copy-icon" class="fa-solid fa-arrow-right-arrow-left"></i></span>
                 </div>`;
+                
+                historyj = JSON.parse(response[0][5])
+                for (entry in historyj) {
+                    console.log(historyj[entry]["ts"])
+                    console.log(historyj[entry]["action"])
+                    console.log(historyj[entry]["username"])
+                }
 
                 form = ``
                 if (pagetype == "owner") {
@@ -60,8 +66,23 @@
                     elements += `
                     <div class="img-section row mb-4">
                         <div class="col-md-4 year-container order-md-2">
-                            <div class="history-section">
-                                <h4 class="paragraph-light">Histórico:</h4>
+                            <h4 class="paragraph-light">Histórico:</h4>
+                            <div class="history-section mb-3">
+                                
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
+                                <p class="paragraph">A 21:34:34 22/03/2021 tornou-se dono</p>
                             </div>
                             <div class="form-section">
                                 <h4 class="paragraph-light">Transferir:</h4>
