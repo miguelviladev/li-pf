@@ -67,8 +67,10 @@
 %%% DEFINIÇÕES GLOBAIS %%%
 \def\titulo{Projeto Final LABI2022}
 \def\data{Aveiro, julho 2021}
-\def\autores{Miguel Vila, Diogo Silva, Miguel Reis, Martim Carvalho}
-\def\autorescontactos{(107276) \href{mailto:miguelovila@ua.pt}{miguelovila@ua.pt}, (108212) \href{mailto:dsgps@ua.pt}{dsgps@ua.pt}, (108545) \href{mailto:mreis@ua.pt}{mreis@ua.pt}, (108749) \href{mailto:martimhcarvalho@ua.pt}{martimhcarvalho@ua.pt}}
+\def\autoresa{Miguel Vila, Diogo Silva}
+\def\autoresb{Miguel Reis, Martim Carvalho}
+\def\autoresacontactos{(107276) \href{mailto:miguelovila@ua.pt}{miguelovila@ua.pt}, (108212) \href{mailto:dsgps@ua.pt}{dsgps@ua.pt}}
+\def\autoresbcontactos{(108545) \href{mailto:mreis@ua.pt}{mreis@ua.pt}, (108749) \href{mailto:martimhcarvalho@ua.pt}{martimhcarvalho@ua.pt}}
 \def\projetocodeua{\url{http://code.ua.pt/projects/labi2022g5}}
 \def\departamento{DETI}
 \def\empresa{UNIVERSIDADE DE AVEIRO}
@@ -95,18 +97,22 @@
 \end{titlepage}
 
 %%%  PÁGINA DE TÍTULO %%%
+\begin{titlepage}
 \title{%
 {\Huge\textbf{\titulo}}\\
 {\Large \departamento\\ \empresa}
 }
 \author{
-    \autores\\\\\
-    \autorescontactos\\\\\\\
-    \projetocodeua\\
+  \autoresa\\\
+  \autoresacontactos\\\\
+  \autoresb\\\
+  \autoresbcontactos\\\\
+  \projetocodeua
 }
 \date{\data}
 \maketitle
 \pagenumbering{arabic}
+\end{titlepage}
 
 %%% OBJETIVOS %%%
 \renewcommand{\abstractname}{OBJETIVOS DO PROJETO}
