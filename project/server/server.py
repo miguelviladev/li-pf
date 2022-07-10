@@ -10,244 +10,38 @@ from imgproc import *
 
 
 class Root(object):
+	def __init__(self):
+			self.api = Api()
+	@cherrypy.expose
+	def index(self):
+			return open(LANDING_PAGE).read()
+		
+	@cherrypy.expose
+	def collections(self, id = None):
+		if id == None:
+			return open(SCRIPT_COLLECTIONS).read()
+		else:
+			return "dsasa"
+		
+	@cherrypy.expose
+	def about(self):
+			return open(ABOUT_PAGE).read()
+		
+	@cherrypy.expose
+	def profile(self):
+			return open(PROFILE_PAGE).read()
+		
+	@cherrypy.expose
+	def upload(self):
+		return open(SCRIPT_UPLOAD).read()
 
-		def __init__(self):
-				self.api = Api()
+	@cherrypy.expose
+	def signin(self):
+		return open(SCRIPT_SIGNIN).read()
 
-		@cherrypy.expose
-		def index(self):
-				return open(LANDING_PAGE).read()
-			
-		@cherrypy.expose
-		def collections(self):
-			return """
-						<!DOCTYPE html>
-						<html lang="pt-PT">
-							<head>
-								<!-- Meta Tags Necessárias -->
-    							<meta charset="UTF-8" />
-    							<meta name="viewport" content="width=device-width, initial-scale=1" />
-    							<!-- CSS do Bootstrap -->
-    							<link rel="stylesheet" href="./css/bootstrap.min.css" />
-    							<!-- CSS do FontAwesome -->
-    							<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    							<!-- CSS Personalizado -->
-    							<link rel="stylesheet" href="./css/global-style.css" />
-    							<link rel="stylesheet" href="./css/navbar-style.css" />
-    							<link rel="stylesheet" href="./css/collections-style.css" />
-    							<!-- JS Personalizado -->
-    							<script src="./js/navbar.js"></script>
-    							<!-- Favicon -->
-    							<link rel="icon" type="image/x-icon" href="./img/favicon.png">
-    							<title>Coleções</title>
-							</head>
-							<body data-bs-spy="scroll" data-bs-offset="200" data-bs-target=".navbar">
-								<main>
-									<script>
-										async function getCollections(bodyhtml) {
-											const options = {
-												method: 'POST',
-												headers: {'Content-Type': 'application/json'},
-												body: JSON.stringify({"token": localStorage.getItem('token')})
-											}
-											const response = await (await fetch('/api/cromos/collections', options)).json();
-											if (response.status == 'ERROR') {
-												window.location.href = '/';
-											} else {
-												elements = '';
-												if (response.message == 'Got collections') {
-													//alert(response.body.length);
-													//arrays_of_collections = response.body.split(',');
-													//for (var i = 0; i < arrays_of_collections.length; i += 3) {
-    												//	alert(array[i], array[i+1], array[i+2]);
-													//}
-													for(id in response.body) {
-													  elements += '<button type="button" class="btn btn-primary btn-block mb-4"><div class="button-content"><p class="name">' + response.body[id][2] + '</p><p class="owner">' + response.body[id][1] +'</p></div><div class="button-icon"><i class="fa-solid fa-angle-right"></i></div></button>'
-													}
-												} else {
-													elements = '<p class="paragraph-light">Não existem coleções</p>';
-												}
-												newbody = bodyhtml.replace('<div class="substitute-target"></div>', elements);
-												document.getElementsByTagName('main')[0].innerHTML = newbody;
-											};
-										};
-
-										async function verify() {
-											const options = {
-												method: 'POST',
-												headers: {'Content-Type': 'application/json'},
-												body: JSON.stringify({"token": localStorage.getItem('token')})
-											};
-											const response = await (await fetch('/api/pages/collections', options)).json();
-											if (response.status == 'OK') {                 
-												//document.getElementsByTagName('main')[0].innerHTML = r;
-												getCollections(response.body);
-											} else {
-												window.location.href = '/';
-											}
-										};
-										verify();
-									</script>
-								</main>
-								<script src="./js/bootstrap.bundle.min.js"></script>
-								<script src="./js/jquery-3.6.0.min.js"></script>
-							</body>
-						</html>
-				"""
-			
-		@cherrypy.expose
-		def about(self):
-				return open(ABOUT_PAGE).read()
-			
-		@cherrypy.expose
-		def profile(self):
-				return open(PROFILE_PAGE).read()
-			
-		@cherrypy.expose
-		def upload(self):
-				return """
-						<!DOCTYPE html>
-						<html lang="pt-PT">
-							<head>
-								<!-- Meta Tags Necessárias -->
-								<meta charset="UTF-8" />
-								<meta name="viewport" content="width=device-width, initial-scale=1" />
-								<!-- CSS do Bootstrap -->
-								<link rel="stylesheet" href="./css/bootstrap.min.css" />
-								<!-- CSS do FontAwesome -->
-								<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
-								<!-- CSS Personalizado -->
-								<link rel="stylesheet" href="./css/global-style.css" />
-								<link rel="stylesheet" href="./css/navbar-style.css" />
-								<link rel="stylesheet" href="./css/upload-style.css" />
-								<!-- JS Personalizado -->
-								<script src="./js/navbar.js"></script>
-								<!-- Favicon -->
-								<link rel="icon" type="image/x-icon" href="./img/favicon.png" />
-								<title>Carregar Imagem</title>
-							</head>
-							<body data-bs-spy="scroll" data-bs-offset="200" data-bs-target=".navbar">
-								<main>
-									<script>
-										async function verify() {
-											const options = {
-												method: 'POST',
-												headers: {'Content-Type': 'application/json'},
-												body: JSON.stringify({"token": localStorage.getItem('token')})
-											};
-											const response = await (await fetch('/api/pages/upload', options)).json();
-											if (response.status == 'OK') {                 
-												document.getElementsByTagName('main')[0].innerHTML = response.body;
-											} else {
-												window.location.href = '/';
-											}
-										};
-										verify();
-									</script>
-								</main>
-								<script src="./js/upload.js"></script>
-								<script src="./js/bootstrap.bundle.min.js"></script>
-								<script src="./js/jquery-3.6.0.min.js"></script>
-							</body>
-						</html>
-				"""
-
-		@cherrypy.expose
-		def signin(self):
-				return """
-						<!DOCTYPE html>
-						<html lang="pt-PT">
-							<head>
-								<!-- Meta Tags Necessárias -->
-								<meta charset="UTF-8" />
-								<meta name="viewport" content="width=device-width, initial-scale=1" />
-								<!-- CSS do Bootstrap -->
-								<link rel="stylesheet" href="/css/bootstrap.min.css" />
-								<!-- CSS do FontAwesome -->
-								<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-								<!-- CSS Personalizado -->
-								<link rel="stylesheet" href="/css/global-style.css" />
-								<link rel="stylesheet" href="/css/navbar-style.css" />
-								<link rel="stylesheet" href="/css/signinup-style.css" />
-								<!-- JS Personalizado -->
-								<script src="/js/navbar.js"></script>
-								<!-- Favicon -->
-								<link rel="icon" type="image/x-icon" href="/img/favicon.png">
-								<title>Iniciar Sessão</title>
-							</head>
-							<body data-bs-spy="scroll" data-bs-offset="200" data-bs-target=".navbar">
-								<main>
-									<script>
-										async function verify() {
-											const options = {
-												method: 'POST',
-												headers: {'Content-Type': 'application/json'},
-												body: JSON.stringify({"token": localStorage.getItem('token')})
-											};
-											const response = await (await fetch('/api/pages/signin', options)).json();
-											if (response.status == 'OK') {                 
-												document.getElementsByTagName('main')[0].innerHTML = response.body;
-											} else {
-												window.location.href = '/';
-											}
-										};
-										verify();
-									</script>
-								</main>
-								<script src="./js/signin.js"></script>
-								<script src="./js/bootstrap.bundle.min.js"></script>
-							</body>
-						</html>
-				"""
-
-		@cherrypy.expose
-		def signup(self):
-				return """
-						<!DOCTYPE html>
-						<html lang="pt-PT">
-							<head>
-								 <!-- Meta Tags Necessárias -->
-								 <meta charset="UTF-8" />
-								 <meta name="viewport" content="width=device-width, initial-scale=1" />
-								 <!-- CSS do Bootstrap -->
-								 <link rel="stylesheet" href="./css/bootstrap.min.css" />
-								 <!-- CSS do FontAwesome -->
-								 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-								 <!-- CSS Personalizado -->
-								 <link rel="stylesheet" href="./css/global-style.css" />
-								 <link rel="stylesheet" href="./css/navbar-style.css" />
-								 <link rel="stylesheet" href="./css/signinup-style.css" />
-								 <!-- JS Personalizado -->
-								 <script type="module" src="./js/authrestriction.js"></script>
-								 <script src="./js/navbar.js"></script>
-								 <!-- Favicon -->
-								 <link rel="icon" type="image/x-icon" href="./img/favicon.png">
-								 <title>Criar Conta</title>
-							</head>
-							<body data-bs-spy="scroll" data-bs-offset="200" data-bs-target=".navbar">
-								<main>
-									<script>
-										async function verify() {
-											const options = {
-												method: 'POST',
-												headers: {'Content-Type': 'application/json'},
-												body: JSON.stringify({"token": localStorage.getItem('token')})
-											};
-											const response = await (await fetch('/api/pages/signup', options)).json();
-											if (response.status == 'OK') {                 
-												document.getElementsByTagName('main')[0].innerHTML = response.body
-											} else {
-												window.location.href = '/';
-											}
-										};
-										verify();
-									</script>
-								</main>
-								<script src="./js/signup.js"></script>
-								<script src="./js/bootstrap.bundle.min.js"></script>
-							</body>
-						</html>
-				"""
+	@cherrypy.expose
+	def signup(self):
+		return open(SCRIPT_SIGNUP).read()
 
 
 

@@ -9,10 +9,19 @@ FONT = os.path.normpath(os.path.join(STORAGE, 'arial.ttf'))
 KEY = 'umapasswordfixe!'
 
 LANDING_PAGE = os.path.normpath(os.path.join(SERVER, '../client/landing.html'))
+
 SIGNIN_PAGE_BODY = os.path.normpath(os.path.join(SERVER, '../client/body-signin.html'))
+SCRIPT_SIGNIN= os.path.normpath(os.path.join(SERVER, '../client/script-signin.html'))
+
 SIGNUP_PAGE_BODY = os.path.normpath(os.path.join(SERVER, '../client/body-signup.html'))
-UPLOAD_PAGE_BODY= os.path.normpath(os.path.join(SERVER, '../client/body-upload.html'))
+SCRIPT_SIGNUP = os.path.normpath(os.path.join(SERVER, '../client/script-signup.html'))
+
+UPLOAD_PAGE_BODY = os.path.normpath(os.path.join(SERVER, '../client/body-upload.html'))
+SCRIPT_UPLOAD = os.path.normpath(os.path.join(SERVER, '../client/script-upload.html'))
+
 COLLECTIONS_PAGE_BODY= os.path.normpath(os.path.join(SERVER, '../client/body-collections.html'))
+SCRIPT_COLLECTIONS = os.path.normpath(os.path.join(SERVER, '../client/script-collections.html'))
+
 ABOUT_PAGE= os.path.normpath(os.path.join(SERVER, '../client/about.html'))
 PROFILE_PAGE= os.path.normpath(os.path.join(SERVER, '../client/profile.html'))
 
