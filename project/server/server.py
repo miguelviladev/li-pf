@@ -20,7 +20,80 @@ class Root(object):
 			
 		@cherrypy.expose
 		def collections(self):
-				return open(COLLECTIONS_PAGE).read()
+			return """
+						<!DOCTYPE html>
+						<html lang="pt-PT">
+							<head>
+								<!-- Meta Tags Necessárias -->
+    							<meta charset="UTF-8" />
+    							<meta name="viewport" content="width=device-width, initial-scale=1" />
+    							<!-- CSS do Bootstrap -->
+    							<link rel="stylesheet" href="./css/bootstrap.min.css" />
+    							<!-- CSS do FontAwesome -->
+    							<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    							<!-- CSS Personalizado -->
+    							<link rel="stylesheet" href="./css/global-style.css" />
+    							<link rel="stylesheet" href="./css/navbar-style.css" />
+    							<link rel="stylesheet" href="./css/collections-style.css" />
+    							<!-- JS Personalizado -->
+    							<script src="./js/navbar.js"></script>
+    							<!-- Favicon -->
+    							<link rel="icon" type="image/x-icon" href="./img/favicon.png">
+    							<title>Coleções</title>
+							</head>
+							<body data-bs-spy="scroll" data-bs-offset="200" data-bs-target=".navbar">
+								<main>
+									<script>
+										async function getCollections(bodyhtml) {
+											const options = {
+												method: 'POST',
+												headers: {'Content-Type': 'application/json'},
+												body: JSON.stringify({"token": localStorage.getItem('token')})
+											}
+											const response = await (await fetch('/api/cromos/collections', options)).json();
+											if (response.status == 'ERROR') {
+												window.location.href = '/';
+											} else {
+												elements = '';
+												if (response.message == 'Got collections') {
+													//alert(response.body.length);
+													//arrays_of_collections = response.body.split(',');
+													//for (var i = 0; i < arrays_of_collections.length; i += 3) {
+    												//	alert(array[i], array[i+1], array[i+2]);
+													//}
+													for(id in response.body) {
+													  elements += '<button type="button" class="btn btn-primary btn-block mb-4"><div class="button-content"><p class="name">' + response.body[id][2] + '</p><p class="owner">' + response.body[id][1] +'</p></div><div class="button-icon"><i class="fa-solid fa-angle-right"></i></div></button>'
+													}
+												} else {
+													elements = '<p class="paragraph-light">Não existem coleções</p>';
+												}
+												newbody = bodyhtml.replace('<div class="substitute-target"></div>', elements);
+												document.getElementsByTagName('main')[0].innerHTML = newbody;
+											};
+										};
+
+										async function verify() {
+											const options = {
+												method: 'POST',
+												headers: {'Content-Type': 'application/json'},
+												body: JSON.stringify({"token": localStorage.getItem('token')})
+											};
+											const response = await (await fetch('/api/pages/collections', options)).json();
+											if (response.status == 'OK') {                 
+												//document.getElementsByTagName('main')[0].innerHTML = r;
+												getCollections(response.body);
+											} else {
+												window.location.href = '/';
+											}
+										};
+										verify();
+									</script>
+								</main>
+								<script src="./js/bootstrap.bundle.min.js"></script>
+								<script src="./js/jquery-3.6.0.min.js"></script>
+							</body>
+						</html>
+				"""
 			
 		@cherrypy.expose
 		def about(self):
@@ -243,6 +316,17 @@ class Pages():
 				else:
 						return {"status": "OK", "body": open(UPLOAD_PAGE_BODY).read()}
 
+		@cherrypy.expose
+		@cherrypy.tools.json_in()
+		@cherrypy.tools.json_out()
+		def collections(self):
+			body = cherrypy.request.json
+			expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body['token'],))
+			if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
+				return {"status": "FORBIDDEN", "body": ""}
+			else:
+				return {"status": "OK", "body": open(COLLECTIONS_PAGE_BODY).read()}
+
 
 
 class Users():
@@ -269,12 +353,12 @@ class Users():
 		@cherrypy.tools.json_in()
 		@cherrypy.tools.json_out()
 		def valid(self):
-				body = cherrypy.request.json
-				expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body["token"],))
-				if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
-						return {"authentication": "ERROR"}
-				else:
-						return {"authentication": "OK"}
+			body = cherrypy.request.json
+			expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body["token"],))
+			if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
+					return {"authentication": "ERROR"}
+			else:
+					return {"authentication": "OK"}
 
 		@cherrypy.expose
 		@cherrypy.tools.json_in()
@@ -305,6 +389,18 @@ class Cromos():
 			else:
 				images = selector("SELECT * FROM images WHERE collection = ?", (id,))
 			return images if len(images) > 0 else {"status": "ERROR", "message": "No images found"}
+
+		@cherrypy.expose
+		@cherrypy.tools.json_in()
+		@cherrypy.tools.json_out()
+		def collections(self):
+			body = cherrypy.request.json
+			expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body["token"],))
+			if body["token"] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
+				return {'status': 'ERROR'}
+			else:
+				collections = selector("SELECT * FROM collections", ())
+				return {"status": "OK", "message": "Got collections", "body": collections} if len(collections) > 0 else {"status": "OK", "message": "No collections found"}
 
 		@cherrypy.expose
 		@cherrypy.tools.json_in()

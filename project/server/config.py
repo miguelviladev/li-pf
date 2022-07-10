@@ -12,7 +12,7 @@ LANDING_PAGE = os.path.normpath(os.path.join(SERVER, '../client/landing.html'))
 SIGNIN_PAGE_BODY = os.path.normpath(os.path.join(SERVER, '../client/body-signin.html'))
 SIGNUP_PAGE_BODY = os.path.normpath(os.path.join(SERVER, '../client/body-signup.html'))
 UPLOAD_PAGE_BODY= os.path.normpath(os.path.join(SERVER, '../client/body-upload.html'))
-COLLECTIONS_PAGE= os.path.normpath(os.path.join(SERVER, '../client/collections.html'))
+COLLECTIONS_PAGE_BODY= os.path.normpath(os.path.join(SERVER, '../client/body-collections.html'))
 ABOUT_PAGE= os.path.normpath(os.path.join(SERVER, '../client/about.html'))
 PROFILE_PAGE= os.path.normpath(os.path.join(SERVER, '../client/profile.html'))
 
