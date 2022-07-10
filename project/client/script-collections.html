@@ -36,10 +36,7 @@
                     elements = '<div class="row">';
                     if (response.message == 'Got collections') {
                         for (id in response.body) {
-                            // elements += '<button type="button" class="btn btn-primary btn-block mb-4"'+ 'onclick="document.location.href=\'/collections/' + response.body[id][0] + '\'"' +'><div class="button-content"><p class="name">' + response.body[id][2] + '</p><p class="owner">' + response.body[id][1] + '</p></div><div class="button-icon"><i class="fa-solid fa-angle-right"></i></div></button>'
-
                             const responseCollection = await (await fetch(`/api/cromos/${response.body[id][0]}`)).json();
-                            
                             elements += `
                             <div class="col-md-4 mb-4">
                                 <div class="card">
@@ -70,7 +67,6 @@
                 };
                 const response = await (await fetch('/api/pages/collections', options)).json();
                 if (response.status == 'OK') {
-                    //document.getElementsByTagName('main')[0].innerHTML = r;
                     getCollections(response.body);
                 } else {
                     window.location.href = '/';
