@@ -30,14 +30,14 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ "token": localStorage.getItem('token') })
                 }
-                const response = await (await fetch('/api/cromos/collections', options)).json();
+                const response = await (await fetch('./api/cromos/collections', options)).json();
                 if (response.status == 'ERROR') {
-                    window.location.href = '/';
+                    window.location.href = './';
                 } else {
                     elements = '<div class="row">';
                     if (response.message == 'Got collections') {
                         for (id in response.body) {
-                            const responseCollection = await (await fetch(`/api/cromos/${response.body[id][0]}`)).json();
+                            const responseCollection = await (await fetch(`./api/cromos/${response.body[id][0]}`)).json();
                             const firstImage = responseCollection[0][0];
 
                             elements += `
@@ -69,11 +69,11 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ "token": localStorage.getItem('token') })
                 };
-                const response = await (await fetch('/api/pages/collections', options)).json();
+                const response = await (await fetch('./api/pages/collections', options)).json();
                 if (response.status == 'OK') {
                     getCollections(response.body);
                 } else {
-                    window.location.href = '/';
+                    window.location.href = './';
                 }
             };
             verify();

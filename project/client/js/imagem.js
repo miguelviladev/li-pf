@@ -18,7 +18,7 @@ async function doKeepImg(e) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "token": localStorage.getItem('token'), "id": window.location.href.substring(window.location.href.lastIndexOf('/') + 1), "username": "" })
     };
-    const response = await (await fetch('/api/cromos/claim', options)).json();
+    const response = await (await fetch('../api/cromos/claim', options)).json();
     if (response.status == 'OK') {
         document.location.reload(true);
     } else {
@@ -34,7 +34,7 @@ async function doTransferImg(e) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ "token": localStorage.getItem('token'), "id": window.location.href.substring(window.location.href.lastIndexOf('/') + 1), "username": document.getElementById("utilizador").value })
         };
-        const response = await (await fetch('/api/cromos/claim', options)).json();
+        const response = await (await fetch('../api/cromos/claim', options)).json();
         if (response.status == 'OK') {
             document.location.reload(true)
         } else {

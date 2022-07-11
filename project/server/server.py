@@ -236,7 +236,7 @@ class Cromos():
 		else:
 			username = selector("SELECT username FROM tokens WHERE token = ?", (id,))
 			images = selector("SELECT * FROM images WHERE owner = ?", (username[0][0],))
-		return images if len(images) > 0 else {"status": "ERROR", "message": "No images found"}
+		return images if len(images) > 0 else {"status": "OK1", "message": "No images found"}
 
 	@cherrypy.expose
 	@cherrypy.tools.json_in()
@@ -282,6 +282,16 @@ class Cromos():
 			prev_hist = json.loads(prev_hist_db) if prev_hist_db != None else json.loads('[]')
 			prev_hist.append({"ts": int(time.time()), "action": "claim", "username": username})
 			executor("UPDATE images SET history = ? WHERE identifier = ?", (json.dumps(prev_hist), imgid,))
+			image_hash = selector("SELECT hash FROM images WHERE identifier = ?", (imgid,))[0][0]
+			original_image_path = os.path.normpath(os.path.join(STORAGE,f"original/{image_hash}.png"))
+			water_image_path = os.path.normpath(os.path.join(STORAGE,f"protected/{image_hash}.png"))
+			temp_image_path = os.path.normpath(os.path.join(STORAGE,f"temporary/{image_hash}.png"))
+			img_file = open(original_image_path, "rb")
+			img_dec = decryptImage(img_file.read())
+			img_file.close()
+			writeImage(img_dec, temp_image_path, False)
+			writeWatermarkedImage(temp_image_path, water_image_path, WATERMARK, username)
+			os.remove(temp_image_path)
 			return {"status": "OK"}
 
 	@cherrypy.expose
@@ -307,9 +317,11 @@ class Cromos():
 		water_image_path = os.path.normpath(os.path.join(STORAGE,f"protected/{image_hash}.{image_extension}"))
 		original_image_path = os.path.normpath(os.path.join(STORAGE,f"original/{image_hash}.{image_extension}"))
 
+		image_bytes = base64.b64decode(base64_image)
+
 		writeImage(base64_image, temp_image_path)
 		writeWatermarkedImage(temp_image_path, water_image_path, WATERMARK)
-		writeImage(encryptImage(base64_image), original_image_path)
+		writeImage(encryptImage(image_bytes), original_image_path)
 
 		owner = selector("SELECT username FROM tokens WHERE token = ?", (body["token"],))[0][0]
 		hist = json.loads('[]')

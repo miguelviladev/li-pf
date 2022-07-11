@@ -23,7 +23,7 @@ async function doRegister(e) {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({"username": username})
     };
-    const response = await (await fetch('/api/users/create', options)).json();
+    const response = await (await fetch('./api/users/create', options)).json();
     if (response.creation == 'OK') {
         document.getElementById("password").value = response.password;
         register_button.style.display = "none";

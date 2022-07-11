@@ -9,34 +9,38 @@ from Crypto.Cipher import AES
 from Crypto import Random
 from config import *
 
-pad   = lambda s: s + (16 - len(s) % 16) * chr(16 - len(s) % 16)
-unpad = lambda s: s[:-ord(s[len(s) - 1:])]
+def getKey():
+    keyHash = SHA256.new()
+    keyHash.update(KEY.encode("utf8"))
+    cryptoKey = keyHash.hexdigest()[:16]
+    return cryptoKey.encode("utf8")
 
+def pad(byte_array):
+        pad_len = 16 - len(byte_array) % 16
+        return byte_array + (bytes([pad_len]) * pad_len)
+    
+def unpad(byte_array):
+    return byte_array[:-ord(byte_array[-1:])]
 
+def encryptImage(data):
+    cipher = AES.new(getKey(), AES.MODE_ECB)
+    return base64.b64encode(cipher.encrypt(pad(data)))
 
-
-
-
+def decryptImage(data):
+    cipher = AES.new(getKey(), AES.MODE_ECB)
+    return unpad(cipher.decrypt(data))
 
 def hashImage(base64_img):
     hash = SHA256.new()
     hash.update(base64_img.encode('utf-8'))
     return hash.hexdigest()
 
-def encryptImage(data):
-    iv = Random.new().read(AES.block_size)
-    cipher = AES.new(hashlib.sha256(KEY.encode("utf-8")).digest(), AES.MODE_CBC, iv)
-    return base64.b64encode(iv + cipher.encrypt(pad(data)))
-
-def decryptImage(data):
-    enc = base64.b64decode(data)
-    iv = enc[:16]
-    cipher = AES.new(hashlib.sha256(KEY.encode("utf-8")).digest(), AES.MODE_CBC, iv)
-    return unpad(cipher.decrypt(enc[16:]))
-
-def writeImage(content, filename):
+def writeImage(content, filename, decode=True):
     with open(filename, "wb") as file:
-        file.write(base64.b64decode(content))
+        if decode:
+            file.write(base64.b64decode(content))
+        else:
+            file.write(content)
 
 def writeWatermarkedImage(input_image_path, output_image_path, watermark_image_path, text=""):
     
@@ -76,10 +80,10 @@ def writeWatermarkedImage(input_image_path, output_image_path, watermark_image_p
         transparent.paste(watermark, position2, mask=watermark)
         transparent.save(output_image_path)
 
-        font = ImageFont.truetype("../storage/arial.ttf", fontsize)
+        font = ImageFont.truetype(os.path.normpath(os.path.join(STORAGE,"arial.ttf")), fontsize)
         while font.getsize(text)[0] < img_fraction*base_image.size[0] and font.getsize(text)[1] < watermark.height / 2:
             fontsize += 1
-            font = ImageFont.truetype("../storage/arial.ttf", fontsize)
+            font = ImageFont.truetype(os.path.normpath(os.path.join(STORAGE,"arial.ttf")), fontsize)
             
         fontsize -= 1
 

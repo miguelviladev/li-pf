@@ -18,7 +18,7 @@ async function doLogin(e) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ "username": username, "password": password })
     };
-    const response = await (await fetch('/api/users/auth', options)).json();
+    const response = await (await fetch('./api/users/auth', options)).json();
     if (response.authentication == 'OK') {
         writeToken(response.token);
     } else {
@@ -29,5 +29,5 @@ async function doLogin(e) {
 
 function writeToken(token) {
     localStorage.setItem('token', token);
-    window.location.href = '/';
+    window.location.href = './';
 }

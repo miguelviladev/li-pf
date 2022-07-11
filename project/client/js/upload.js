@@ -51,9 +51,9 @@ async function doUpload(e) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({"token": token, "name": name, "collection": collection, "image": e.target.result})
         };
-        const response = await (await fetch('/api/cromos/upload', options)).json();
+        const response = await (await fetch('./api/cromos/upload', options)).json();
         if (response.status == 'OK') {
-            window.location.href = '/upload';
+            window.location.href = './upload';
         } else  {
             $('#exampleModalCenter').modal({backdrop: 'static', keyboard: false})  
             $('#exampleModalCenter').modal('show'); 

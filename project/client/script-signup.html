@@ -30,11 +30,11 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ "token": localStorage.getItem('token') })
                 };
-                const response = await (await fetch('/api/pages/signup', options)).json();
+                const response = await (await fetch('./api/pages/signup', options)).json();
                 if (response.status == 'OK') {
                     document.getElementsByTagName('main')[0].innerHTML = response.body
                 } else {
-                    window.location.href = '/';
+                    window.location.href = './';
                 }
             };
             verify();

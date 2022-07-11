@@ -14,7 +14,6 @@
     <link rel="stylesheet" href="./css/navbar-style.css" />
     <link rel="stylesheet" href="./css/landing-style.css" />
     <!-- JS Personalizado -->
-    <script src="./js/landing.js"></script>
     <script src="./js/navbar.js"></script>
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="./img/favicon.png">
@@ -31,7 +30,7 @@
     <!-- Barra de Navegação -->
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container nav-cont">
-            <a class="navbar-brand" href="/" onclick="esconder(false)"><img src="./img/logo.png" alt=""></a>
+            <a class="navbar-brand" href="./" onclick="esconder(false)"><img src="./img/logo.png" alt=""></a>
             <button id="toggler" class="navbar-toggler collapsed" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                 aria-label="Toggle navigation">
@@ -40,7 +39,7 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/about" onclick="esconder()">Sobre</a>
+                        <a class="nav-link" href="./about" onclick="esconder()">Sobre</a>
                     </li>
                 </ul>
             </div>
@@ -60,7 +59,7 @@
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ "token": localStorage.getItem('token') })
                             };
-                            const response = await (await fetch('/api/pages/landing', options)).json();
+                            const response = await (await fetch('./api/pages/landing', options)).json();
                             if (response.status == 'OK1') {
                                 document.getElementsByTagName('main')[0].innerHTML = response.body;
                             } else {

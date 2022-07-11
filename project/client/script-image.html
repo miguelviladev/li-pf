@@ -24,7 +24,7 @@
     <main>
         <script>
             async function getImage(pagetype, bodyhtml) {
-                const response = await (await fetch(`/api/cromos/data/` + window.location.href.substring(window.location.href.lastIndexOf('/') + 1))).json();
+                const response = await (await fetch(`../api/cromos/data/` + window.location.href.substring(window.location.href.lastIndexOf('/') + 1))).json();
 
                 owned_image_form = `
                 <div class="input-group justify-content-center">
@@ -63,7 +63,7 @@
                 }
 
                 if (response.status == 'ERROR') {
-                    window.location.href = '/';
+                    window.location.href = '../';
                 } else {
                     title = `<h1 class="title1-light mb-4">Imagem: ${response[0][4]}</h1>`;
                     elements = title;
@@ -94,11 +94,11 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ "token": localStorage.getItem('token'), "img_id": window.location.href.substring(window.location.href.lastIndexOf('/') + 1)})
                 };
-                const response = await (await fetch('/api/pages/image', options)).json();
+                const response = await (await fetch('../api/pages/image', options)).json();
                 if (response.status == 'OK') {
                     getImage(response.type, response.body);
                 } else {
-                    window.location.href = '/';
+                    window.location.href = '../';
                 }
             };
             verify();
