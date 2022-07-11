@@ -76,9 +76,9 @@ class Pages():
 		body = cherrypy.request.json
 		expiration = selector("SELECT expiry FROM tokens WHERE token = ?", (body['token'],))
 		if body['token'] == None or len(expiration) == 0 or expiration[0][0] < int(time.time()):
-			return {'status': 'OK1', 'body': '<a id="a-button-action" href="/signin"><button id="button-action" type="button" class="btn btn-primary">Autenticação <i class="fa-solid fa-key"></i></button></a>'}
+			return {'status': 'OK1', 'body': '<a id="a-button-action" href="./signin"><button id="button-action" type="button" class="btn btn-primary">Autenticação <i class="fa-solid fa-key"></i></button></a>'}
 		else:
-			return {'status': 'OK', 'body': '<a id="a-button-action" href="/collections"><button id="button-action" type="button" class="btn btn-primary">Ver Coleções <i class="fa-solid fa-images"></i></button></a>'}
+			return {'status': 'OK', 'body': '<a id="a-button-action" href="./collections"><button id="button-action" type="button" class="btn btn-primary">Ver Coleções <i class="fa-solid fa-images"></i></button></a>'}
 
 	@cherrypy.expose
 	@cherrypy.tools.json_in()
