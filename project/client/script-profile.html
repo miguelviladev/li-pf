@@ -63,7 +63,7 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ "token": localStorage.getItem('token') })
                 };
-                const response = await (await fetch('./api/pages/collection', options)).json();
+                const response = await (await fetch('./api/pages/profile', options)).json();
                 if (response.status == 'OK') {
                     getProfile(response.body, localStorage.getItem('token'));
                 } else {
